@@ -470,20 +470,18 @@ void setup() {
  // size(1600, 900, P3D);
   //size(800, 450, P3D);
   size(1067, 600, P3D);
-<<<<<<< HEAD
   castleHill = new Terrain();
-=======
+
 //  size(1600, 900, P3D);
 
   // Setup hue saturation brightness based colors
   colorMode(HSB, 100f, 100f, 100f);
->>>>>>> 47d7cc6230e7d858433eae626cb84f36872f3a55
 
   tweaker = new Tweaker();
   //tweaker.openEditor();
   
   // No lines between polygons
-  noStroke();
+  // noStroke();
   fill(80);
 }
 
@@ -492,16 +490,16 @@ void draw() {
   tweaker.update();
   
   // Clear to black
-  background(0);
+  background(50);
 
   // Center screen
   translate(width/2f, height/2f);
   scale(height/1000.0);
 
   // Setup lights
-  directionalLight(80, 50, 40, 0, -1, 0);
-  directionalLight(30, 80, 80, -0.5, 0.8, 0.1);
-  ambientLight(70,30,20);
+  //directionalLight(80, 50, 40, 0, -1, 0);
+  //directionalLight(30, 80, 80, -0.5, 0.8, 0.1);
+  //ambientLight(70,30,20);
   //lights();
   
   castleHill.draw();
