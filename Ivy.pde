@@ -2,7 +2,9 @@ class Ivy{
   PlantSegment root; 
   int segmentAmount; 
   float maxSegmentLenght = 1;
-  float growthSpeed = 0.5;
+  float growthSpeed = 0.5;  
+  //amount of sides in the sylinder of the ivy branches 
+  int segmentSideAmount = 10;
   
   
   Ivy(float posx, float posy, float posz){
