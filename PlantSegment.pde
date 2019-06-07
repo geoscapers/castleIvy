@@ -10,10 +10,12 @@ class PlantSegment{
   float endX;
   float endY;
   float endZ;
-  float startTickness;
+  float startThickness;
   float endThickness;
  
-
+ /*
+ Construction for the root segment, when there is no parentSegment
+ */
  PlantSegment(float startx, float starty, float startz, Ivy plant){
    this.startX = startx;
    this.endX = startx;
@@ -22,8 +24,13 @@ class PlantSegment{
    this.startZ = startz;
    this.endZ = startz; 
    this.plant = plant;
+   this.startThickness = 0;
+   this.endThickness = 0;
  }
  
+ /*
+ Construction for a segment that is not a root (has a parent segment)  
+ */
  PlantSegment(PlantSegment parent, Ivy plant){
    this.parent = parent;
    this.startX = parent.startX;
@@ -33,6 +40,8 @@ class PlantSegment{
    this.startZ = parent.startZ;
    this.endZ = parent.startZ; 
    this.plant = plant;
+   this.startThickness = parent.endThickness;
+   this.endThickness = 0;
  }  
  
  void update(){
