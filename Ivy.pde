@@ -9,7 +9,18 @@ class Ivy{
     root = new PlantSegment(posx, posy, posz, this);
   } 
   
+  void updateIvy(){
+    //if anything of the ivy needs to be updated do it here
+    
+    //then update the root (and all the following branches)
+    root.update();
+  }
   
+  void drawIvy(){
+    
+    //draw one segment at a time
+    root.drawSegment();
+  }  
   
 }  
   
