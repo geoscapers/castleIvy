@@ -233,7 +233,8 @@ import org.demotweaker.ui.*;
 Tweaker tweaker;
 
 void setup() {
-  size(1600, 900, P3D);
+  size(1067, 600, P3D);
+//  size(1600, 900, P3D);
   tweaker = new Tweaker();
   
   //tweaker.openEditor();
