@@ -235,8 +235,13 @@ Tweaker tweaker;
 
 
 void setup() {
+<<<<<<< HEAD
   size(1600, 900, P3D);
   //size(800, 450, P3D);
+=======
+  size(1067, 600, P3D);
+//  size(1600, 900, P3D);
+>>>>>>> 887f5baf946eb36ddb8e430756032044e06ac8a3
   tweaker = new Tweaker();
   
   //tweaker.openEditor();
