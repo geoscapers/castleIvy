@@ -1,8 +1,16 @@
 class Terrain {
   
   int size = 100;
-  float cellSize = 1;
+  float cellSize = 5;
   float[][] heights = new float[size][size];
+  
+  Terrain() {
+    for(int x = 0; x < size - 1; x++) {
+     for (int y = 0; y < size - 1; y++) {
+         heights[x][y] = noise(x, y) * cellSize * size * 0.05;
+     }
+    }
+  }
   
   void draw() {
     beginShape(TRIANGLES);
@@ -10,7 +18,6 @@ class Terrain {
     for(int x = 0; x < size - 1; x++) {
      for (int y = 0; y < size - 1; y++) {
          drawCell(x, y);
-     
      }
     }
     

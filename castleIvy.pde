@@ -462,7 +462,7 @@ import org.demotweaker.ui.*;
 
 
 Tweaker tweaker;
-
+Terrain castleHill;
 
 
 void setup() {
@@ -470,7 +470,7 @@ void setup() {
  // size(1600, 900, P3D);
   //size(800, 450, P3D);
   size(1067, 600, P3D);
-
+  castleHill = new Terrain();
 
   tweaker = new Tweaker();
   
@@ -483,7 +483,7 @@ void draw() {
   
   background(0);
   
-  draw();
+  castleHill.draw();
   
 }
   
