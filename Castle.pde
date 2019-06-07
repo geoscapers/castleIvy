@@ -11,3 +11,12 @@ void getCastleDistance(PVector position, PVector vectorToClosestWall) {
     0,
     centerZ - position.z);
 }
+
+
+
+
+class Castle {
+
+  
+  
+}
