@@ -495,16 +495,19 @@ void setup() {
 
 
 void draw() {
+  // Center screen
+  translate(width/2f, height/2f);
+  scale(height/100.0);
+
   tweaker.update();
   
-  camera.update();
   
   // Clear to black
   background(50);
 
-  // Center screen
-  translate(width/2f, height/2f);
-  scale(height/100.0);
+  
+    camera.update();
+
 
   // Setup lights
   directionalLight(80, 50, 40, 0, -1, 0);
@@ -512,7 +515,9 @@ void draw() {
   ambientLight(70,30,20);
   lights();
   
+  pushMatrix();
   castleHill.draw();
+  popMatrix();
 
   // Calibration sphere
   pushMatrix();
@@ -524,8 +529,17 @@ void draw() {
   
 
 
+  pushMatrix();
   ivy.drawIvy();
+  popMatrix();
+
 
 
 }
+
+void mouseWheel(MouseEvent event) {
+  float e = event.getCount();
+  camera.changeDistance(e * 10f);
+}
+
   
