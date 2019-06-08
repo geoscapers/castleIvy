@@ -473,6 +473,9 @@ void setup() {
   tweaker = new Tweaker();
 
   camera = new ActionCam(tweaker);
+  
+  // Setup hue saturation brightness based colors
+  colorMode(HSB, 100f, 100f, 100f);
 
 
  // size(1600, 900, P3D);
@@ -483,8 +486,6 @@ void setup() {
   
 //  size(1600, 900, P3D);
 
-  // Setup hue saturation brightness based colors
-  colorMode(HSB, 100f, 100f, 100f);
   
   castle = new VoxelCastle(2f, 42);
 
@@ -513,13 +514,12 @@ void draw() {
 
 
   // Setup lights
-  directionalLight(80, 50, 40, 0, -1, 0);
+  directionalLight(80, 50, 100, 0, -1, 0);
   directionalLight(30, 80, 80, -0.5, 0.8, 0.1);
 
   directionalLight(20, 20, 100, 0.2, -0.3, -0.3);
 
-  ambientLight(70,30,20);
-  lights();
+  ambientLight(70,30,30);
   
   pushMatrix();
   castleHill.draw();

@@ -9,16 +9,16 @@ class Terrain {
     for(int x = 0; x < size; x++) {
      for (int z = 0; z < size; z++) {
          float pikkukumpare= noise(x * 0.1, z * 0.1) * cellSize * size * 0.05;
-         float kumpare = (sin(x / size * PI) * sin(z / size * PI)) * size;
-         heights[x][z] = kumpare * 13 + pikkukumpare * 4;
+         float kumpare = (sin(1.0 * x / size * PI) * sin(1.0 * z / size * PI));
+         heights[x][z] = kumpare * -30 + pikkukumpare * -3;
      }
     }
   }
   
   void draw() {
     pushMatrix();
-    fill(25, 55, 80);
-    translate(-cellSize * size / 2, -10, -cellSize * size / 2);
+    fill(30, 50, 80);
+    translate(-cellSize * size / 2, 45, -cellSize * size / 2);
     
     beginShape(TRIANGLES);
     
@@ -40,6 +40,7 @@ class Terrain {
     }
     endShape();
     popMatrix();
+    
   }
   
   void drawCell(int cellX, int cellZ) {
@@ -56,9 +57,14 @@ class Terrain {
     
     drawTriangle(x1, y1, z1, x2, y2, z1, x1, y3, z2);
     drawTriangle(x2, y2, z1, x2, y4, z2, x1, y3, z2);
+    
   }
   
-  void drawGrass(int cellX, int cellZ) {
+  void drawGrass(int x, int z) {
+    
+  }
+  
+  /*void drawGrass(int cellX, int cellZ) {
     
     strokeWeight(2);
     
@@ -98,16 +104,15 @@ class Terrain {
         float wX = map(noise(secondsFromStart() * windSpeed + gX * 437), 0, 1, -windAmount, windAmount);
         float wZ = map(noise(secondsFromStart() * windSpeed + 949.92 + gZ * 154), 0, 1, -windAmount, windAmount);
         
-        stroke(30, 60, 40);
+        stroke(28, 65, 40);
         vertex(gX, yC, gZ);
-        stroke(30, 60, 70);
-        vertex(gX + wX, yC - 4, gZ + wZ);
+        stroke(24, 45, 60);
+        vertex(gX + wX, yC - 2, gZ + wZ);
 
-      }
-      
+      } 
     }
-    
   }
+  */
   
   void drawTriangle(float xA, float yA, float zA, float xB, float yB, float zB, float xC, float yC, float zC) {
     noStroke();

@@ -16,6 +16,9 @@ class PlantSegment{
   float noiseseed = 0;
   float branchProbability = 0;
   boolean branchEnding = false;
+  int maxBranchLength = 0;
+  boolean triedLeaf = false;
+  float segmentBirthSecondFromStart;
   
  
  /*
@@ -34,6 +37,8 @@ class PlantSegment{
    segmentcount = 1;
    noiseseed = 0;
    branchProbability = plant.branchProbability;
+   maxBranchLength = plant.maxBranchLength;
+   segmentBirthSecondFromStart = secondsFromStart();
    
    
  }
@@ -56,15 +61,23 @@ class PlantSegment{
    this.direction.set(parent.direction);
    direction.normalize();
    branchProbability = parent.branchProbability;
+   segmentBirthSecondFromStart = secondsFromStart();
   
    this.direction.add(
        map(noise(noiseseed+noisepos+113.13), 0, 1, -plant.turnstrength, plant.turnstrength), 
        map(noise(noiseseed+noisepos+231.12), 0, 1, -plant.turnstrength, plant.turnstrength), 
        map(noise(noiseseed+noisepos+21.21), 0, 1, -plant.turnstrength, plant.turnstrength));
+       
+    //sun attractor   
    direction.add(plant.upDirection.x*0.07, plant.upDirection.y*0.07, plant.upDirection.z*0.07);   
+   //away from middle
+   plant.tempForDissat.set(plant.prevMean).sub(startpos).normalize().mult(-0.05);
+   direction.add(plant.tempForDissat);
+   
    direction.normalize();
    this.segmentLength = 0;
    plant.addSegmentAmount();
+   maxBranchLength = parent.maxBranchLength;
    
    
  }  
@@ -73,7 +86,7 @@ class PlantSegment{
  Construction for a segment that is not a root (has a parent segment)  
  and are not given its direction
  */
- PlantSegment(PlantSegment parent, Ivy plant, PVector direction){
+ PlantSegment(PlantSegment parent, Ivy plant, PVector direction, float maxLengthMul){
    this.parent = parent;
    this.startpos.set(parent.endpos);
    this.endpos.set(parent.endpos);
@@ -86,11 +99,14 @@ class PlantSegment{
    this.noiseseed = random(0f, 100f);
    plant.addSegmentAmount();
    segmentcount = parent.segmentcount +1;
-   branchProbability = 0.2*parent.branchProbability;
+   branchProbability = 0.4*parent.branchProbability;
+   maxBranchLength = (int)(parent.maxBranchLength*maxLengthMul);
+   segmentBirthSecondFromStart = secondsFromStart();
    
  } 
  
  void update(){
+   
    //add here code for updating this segment
    //thickness
    if (parent != null){
@@ -103,11 +119,11 @@ class PlantSegment{
      } 
      //othervise put a minimum width
      else{
-       if (endThickness < 0.005)endThickness = 0.005;
+       if (endThickness < 0.015)endThickness = 0.015;
      }  
    }
    else{
-     endThickness = startThickness*0.97;
+     endThickness = startThickness*plant.thicknesLoss;
    }
    
    
@@ -135,7 +151,7 @@ class PlantSegment{
    } 
    //if we do not have yet, then make next segment if we are long enough
    if (segmentLength > plant.segmentChildbirtLengt && nextSegment == null && !branchEnding){
-       if (random(0,1) > segmentcount/plant.maxBranchLength){
+       if (random(0,1) > segmentcount/maxBranchLength){
                 nextSegment = new PlantSegment(this, plant);  
                //println("new segment");
        }
@@ -154,9 +170,36 @@ class PlantSegment{
        PVector d = direction.copy();
        
        d.add(random(-plant.branchWildness, plant.branchWildness), random(-plant.branchWildness, plant.branchWildness), random(-plant.branchWildness, plant.branchWildness));
-       branchSegment = new PlantSegment(this, plant, d.normalize());
+       branchSegment = new PlantSegment(this, plant, d.normalize(), 0.9);
+       plant.addBranchAmount();
        
      }  
+     //if not try to make a shorter
+     r = random(0, 1);
+     if (r < branchProbability*0.1){
+       //createBranch successfull
+       PVector d = direction.copy();
+       
+       d.add(random(-plant.branchWildness, plant.branchWildness), random(-plant.branchWildness, plant.branchWildness), random(-plant.branchWildness, plant.branchWildness));
+       branchSegment = new PlantSegment(this, plant, d.normalize(), 0.1);
+       plant.addBranchAmount();
+       
+     }  
+     
+   }  
+   //if this is not gonna branch check if this shouls have a leaf
+   if (leaf == null && branchSegment == null && branchTried == true && triedLeaf == false){
+     float r = random(0, 1);
+     triedLeaf = true;
+     if (r < plant.leafprob){
+       leaf = new Leaf(plant, this);
+     }  
+   } 
+   //or if this is ending then then add always a leaf
+   if (branchEnding && leaf == null) leaf = new Leaf(plant, this);
+   //add ends to mean
+   if (branchSegment == null && nextSegment == null){
+       plant.addToMean(endpos);
    }  
    
    
@@ -165,7 +208,21 @@ class PlantSegment{
    if (nextSegment != null) nextSegment.update();  
    if (branchSegment != null) branchSegment.update();  
  }
+ 
+ 
  void drawSegment(){
+   float since = secondsSince(segmentBirthSecondFromStart);
+   float colorage = since*plant.freshColorChangeRate;
+   if (colorage < 1){
+     fill(lerpColor(plant.sproutColor, plant.branchColor, colorage));
+   }  
+   else{
+     since -= 1/plant.freshColorChangeRate;
+     colorage = since*plant.colorChangeRate;
+     if (colorage > 1) colorage = 1;
+     fill(lerpColor(plant.branchColor, plant.rootColor, colorage));
+   }  
+   
    //do the drawing of this segment here
    pushMatrix();
    
