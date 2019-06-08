@@ -24,6 +24,17 @@ class Int3 {
          round(v.z));
   }
   
+
+
+
+
+
+
+
+
+
+
+  
   Int3(Int3 i) {
     this(i.x, i.y, i.z);
   }

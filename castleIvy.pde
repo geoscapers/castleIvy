@@ -472,6 +472,9 @@ void setup() {
   tweaker = new Tweaker();
 
   camera = new ActionCam(tweaker);
+  
+  // Setup hue saturation brightness based colors
+  colorMode(HSB, 100f, 100f, 100f);
 
 
  // size(1600, 900, P3D);
@@ -482,8 +485,8 @@ void setup() {
   
 //  size(1600, 900, P3D);
 
-  // Setup hue saturation brightness based colors
-  colorMode(HSB, 100f, 100f, 100f);
+  
+  
 
 
   //tweaker.openEditor();
@@ -510,9 +513,9 @@ void draw() {
 
 
   // Setup lights
-  directionalLight(80, 50, 40, 0, -1, 0);
+  directionalLight(80, 50, 100, 0, -1, 0);
   directionalLight(30, 80, 80, -0.5, 0.8, 0.1);
-  ambientLight(70,30,20);
+  ambientLight(70,30,30);
   lights();
   
   pushMatrix();
