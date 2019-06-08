@@ -80,6 +80,41 @@ float secondsSince(float timeSeconds) {
   return secondsFromStart() - timeSeconds;
 }
 
+private PVector u = new PVector();
+private PVector v = new PVector();
+private PVector t = new PVector(1, 0,0);
+
+void drawCylinder(PVector direction, PVector startpos, PVector endpos, float bottomwidth, float topwidth,int sides){
+   
+   if (direction.equals(t)){
+       t.set(0,0,1);
+   }  
+   t.cross(direction, u);
+   u.cross(direction, v);
+   u.normalize();
+   v.normalize();
+   
+   PVector r1 = new PVector();
+   PVector r2 = new PVector();
+   float angle = 0;
+   float angleIncrement = TWO_PI / sides;
+   beginShape(QUAD_STRIP);
+   for (int i = 0; i < sides + 1; ++i) {
+     r1.set(startpos);
+     addScaled(r1,u,cos(angle)*bottomwidth);
+     addScaled(r1,v,sin(angle)*bottomwidth);
+     vertex(r1);
+     
+     r2.set(endpos);
+     addScaled(r2,u,cos(angle)*topwidth);
+     addScaled(r2,v,sin(angle)*topwidth);
+     vertex(r2);
+     angle += angleIncrement;
+     
+   }
+   endShape();
+ }  
+
 
 private PVector tempV1 = new PVector();
 private PVector tempV2 = new PVector();

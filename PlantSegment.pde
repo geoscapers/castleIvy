@@ -79,7 +79,7 @@ class PlantSegment{
    pushMatrix();
    
   
-   drawCylinder(10);
+   drawCylinder(direction, startpos, endpos, startThickness, endThickness,10){
    
    
    popMatrix();
@@ -90,52 +90,12 @@ class PlantSegment{
    
  }  
  
- void drawCylinder(int sides){
-   PVector u = new PVector();
-   PVector v = new PVector();
-   PVector t = new PVector(1, 0,0);
-   if (direction.equals(t)){
-       t.set(0,0,1);
-   }  
-   t.cross(direction, u);
-   u.cross(direction, v);
-   u.normalize();
-   v.normalize();
-   
-   PVector r1 = new PVector();
-   PVector r2 = new PVector();
-   float angle = 0;
-   float angleIncrement = TWO_PI / sides;
-   beginShape(QUAD_STRIP);
-   for (int i = 0; i < sides + 1; ++i) {
-     r1.set(startpos);
-     addScaled(r1,u,cos(angle)*10);
-     addScaled(r1,v,sin(angle)*10);
-     vertex(r1);
-     
-     r2.set(endpos);
-     addScaled(r2,u,cos(angle));
-     addScaled(r2,v,sin(angle));
-     vertex(r2);
-     angle += angleIncrement;
-     
-   }
-   endShape();
- }  
  
  
- void drawCylinder2(float topRadius, float bottomRadius, float tall, int sides) {
-  float angle = 0;
-  float angleIncrement = TWO_PI / sides;
-  beginShape(QUAD_STRIP);
-  for (int i = 0; i < sides + 1; ++i) {
-    vertex(bottomRadius*cos(angle), 0, bottomRadius*sin(angle));
-    vertex(topRadius*cos(angle), tall, topRadius*sin(angle));
-    angle += angleIncrement;
-  }
-  endShape();
+ 
+
   
- }
+ 
  
  
  
