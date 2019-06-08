@@ -484,7 +484,6 @@ void setup() {
   // No lines between polygons
   // noStroke();
   fill(80);
-  tweaker.
 }
 
 
