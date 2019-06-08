@@ -35,6 +35,10 @@ class Int3 {
     this.z = z;
   }
 
+  void set(Int3 i) {
+    set(i.x, i.y, i.z);
+  }
+
   @Override int hashCode() {
     return ((((x * 31) + y) * 31) + z) * 31;     
   }
@@ -84,6 +88,16 @@ private PVector u = new PVector();
 private PVector v = new PVector();
 private PVector t = new PVector(1, 0,0);
 
+private PVector tempR1 = new PVector();
+private PVector tempR2 = new PVector();
+private PVector dcTempNorm = new PVector();
+private PVector tempDir = new PVector();
+
+void drawCylinder(PVector startpos, PVector endpos, float bottomwidth, float topwidth,int sides){
+   tempDir.set(1, 0, 0);
+   drawCylinder(tempDir, startpos, endpos, bottomwidth, topwidth,sides);
+}
+
 void drawCylinder(PVector direction, PVector startpos, PVector endpos, float bottomwidth, float topwidth,int sides){
    
    if (direction.equals(t)){
@@ -94,23 +108,54 @@ void drawCylinder(PVector direction, PVector startpos, PVector endpos, float bot
    u.normalize();
    v.normalize();
    
-   PVector r1 = new PVector();
-   PVector r2 = new PVector();
    float angle = 0;
    float angleIncrement = TWO_PI / sides;
    beginShape(QUAD_STRIP);
    for (int i = 0; i < sides + 1; ++i) {
-     r1.set(startpos);
-     addScaled(r1,u,cos(angle)*bottomwidth);
-     addScaled(r1,v,sin(angle)*bottomwidth);
-     vertex(r1);
      
-     r2.set(endpos);
-     addScaled(r2,u,cos(angle)*topwidth);
-     addScaled(r2,v,sin(angle)*topwidth);
-     vertex(r2);
+     // Normal is straight out
+     dcTempNorm.set(0,0,0);     
+     addScaled(dcTempNorm,u,cos(angle));
+     addScaled(dcTempNorm,v,sin(angle));
+     normal(dcTempNorm.x, dcTempNorm.y, dcTempNorm.z);
+     
+     // Bottom pos
+     tempR1.set(startpos);
+     addScaled(tempR1,u,cos(angle)*bottomwidth);
+     addScaled(tempR1,v,sin(angle)*bottomwidth);
+     vertex(tempR1);
+     
+     // Top pos
+     tempR2.set(endpos);
+     addScaled(tempR2,u,cos(angle)*topwidth);
+     addScaled(tempR2,v,sin(angle)*topwidth);
+     vertex(tempR2);
+     
      angle += angleIncrement;
-     
    }
    endShape();
  }  
+
+
+void makeRectangle(PVector a, PVector b, PVector c, PVector d) {
+  makeTriangle(a, b, d);  
+  makeTriangle(b, c, d);  
+}
+
+private PVector mtTempNormal = new PVector();
+private PVector mtTempAB = new PVector();
+private PVector mtTempAC = new PVector();
+void makeTriangle(PVector a, PVector b, PVector c) {
+  
+  // Calculate normal for triangle
+  mtTempAB.set(b).sub(a);
+  mtTempAC.set(c).sub(a);
+  mtTempAB.cross(mtTempAC, mtTempNormal);
+  mtTempNormal.normalize();
+  
+  // Triangle corners and their normals
+  normal(tempVn.x, tempVn.y, tempVn.z);
+  vertex(a.x, a.y, a.z);
+  vertex(b.x, b.y, b.z);
+  vertex(c.x, c.y, c.z);
+}
