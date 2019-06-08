@@ -481,7 +481,7 @@ void setup() {
   //tweaker.openEditor();
   
   // No lines between polygons
-  // noStroke();
+  noStroke();
   fill(80);
 }
 
@@ -497,10 +497,10 @@ void draw() {
   scale(height/100.0);
 
   // Setup lights
-  //directionalLight(80, 50, 40, 0, -1, 0);
-  //directionalLight(30, 80, 80, -0.5, 0.8, 0.1);
-  //ambientLight(70,30,20);
-  //lights();
+  directionalLight(80, 50, 40, 0, -1, 0);
+  directionalLight(30, 80, 80, -0.5, 0.8, 0.1);
+  ambientLight(70,30,20);
+  lights();
   
   castleHill.draw();
 
