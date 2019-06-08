@@ -29,10 +29,7 @@ class ActionCam {
     float rotationAngle = map(mouseX, 0, width, 0, TAU);
     float elevationAngle = map(mouseY, 0, height, 0, TAU/2);
 
-<<<<<<< HEAD
-=======
     float dist = 4f;
->>>>>>> 08252e20d22ae8ecfa19adccd6a8f4d0f7596a06
 
     position.set(rotateCameraDistance * cos(rotationAngle)  * sin(elevationAngle),
                  rotateCameraDistance * cos(elevationAngle) - rotateCameraDistance / 2f,
