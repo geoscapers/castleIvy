@@ -464,7 +464,7 @@ import org.demotweaker.ui.*;
 Tweaker tweaker;
 Terrain castleHill;
 Ivy ivy;
-Castle castle;
+VoxelCastle castle;
 ActionCam camera;
 
 void setup() {
@@ -486,7 +486,7 @@ void setup() {
   // Setup hue saturation brightness based colors
   colorMode(HSB, 100f, 100f, 100f);
   
-  castle = new Castle();
+  castle = new VoxelCastle(2f, 42);
 
 
   //tweaker.openEditor();
@@ -515,6 +515,9 @@ void draw() {
   // Setup lights
   directionalLight(80, 50, 40, 0, -1, 0);
   directionalLight(30, 80, 80, -0.5, 0.8, 0.1);
+
+  directionalLight(20, 20, 100, 0.2, -0.3, -0.3);
+
   ambientLight(70,30,20);
   lights();
   
