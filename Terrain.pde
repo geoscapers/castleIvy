@@ -1,6 +1,6 @@
 class Terrain {
   
-  int size = 100;
+  int size = 30;
   float cellSize = 5;
   float[][] heights = new float[size][size];
   
@@ -61,16 +61,27 @@ class Terrain {
     
     strokeWeight(0.15);
     
-    int grassAmount = 10;
+    int grassAmount = 5;
     for (int x = 0; x < grassAmount; x++) {
       
       for (int z = 0; z < grassAmount; z++) {
         
+        
+        
         float dX = x * 1f / grassAmount * cellSize;
-        dX += noise(x * 0.5, z * 0.5);
+        
         
         float dZ = z * 1f / grassAmount * cellSize;
-        dZ += noise(x * 0.5, z * 0.5);
+        
+        float gX = cellX * cellSize + dX;
+        float gZ = cellZ * cellSize + dZ;
+        
+        float shuffle = cellSize * 0.3;
+        float tX = map(noise(gX, gZ), 0, 1, -shuffle, shuffle);
+        float tZ = map(noise(gX + 113.35, gZ + 142.93), 0, 1, -shuffle, shuffle);
+        
+        gX += tX;
+        gZ += tZ;
         
         float y1 = heights[cellX][cellZ];
         float y2 = heights[cellX + 1][cellZ];
@@ -81,12 +92,15 @@ class Terrain {
         float yB = map(x, 0, grassAmount, y3, y4);
         float yC = map(z, 0, grassAmount, yA, yB);
         
-        
+        float windSpeed = 0.2;
+        float windAmount = cellSize * 0.2;
+        float wX = map(noise(secondsFromStart() * windSpeed), 0, 1, -windAmount, windAmount);
+        float wZ = map(noise(secondsFromStart() + 225.49 * windSpeed + 249.92), 0, 1, -windAmount, windAmount);
         
         stroke(30, 60, 40);
-        vertex(cellX * cellSize + dX, yC, cellZ * cellSize + dZ);
+        vertex(gX, yC, gZ);
         stroke(30, 60, 70);
-        vertex(cellX * cellSize + dX, yC - 5, cellZ * cellSize + dZ);
+        vertex(gX + wX, yC - 5, gZ);
       }
       
     }
