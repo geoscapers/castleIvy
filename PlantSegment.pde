@@ -227,7 +227,7 @@ class PlantSegment{
    pushMatrix();
    
   
-   drawCylinder(direction, startpos, endpos, startThickness, endThickness,10);
+   drawCylinder(direction, startpos, endpos, startThickness, endThickness,plant.segmentSideAmount);
    
    
    popMatrix();

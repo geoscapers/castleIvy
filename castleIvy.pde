@@ -484,15 +484,15 @@ void setup() {
   //size(800, 450, P3D);
   size(1067, 600, P3D);
   castleHill = new Terrain(7, 0.005, 0.5, -30, 2);
-  bgHill1 = new Terrain(13, 0.0026, 0.000015, -135, 5);
-  bgHill2 = new Terrain(25, 0.0008, 0.0005, -150, 9);
+  //bgHill1 = new Terrain(13, 0.0026, 0.000015, -135, 5);
+  //bgHill2 = new Terrain(25, 0.0008, 0.0005, -150, 9);
   
   ivy =  new Ivy(new PVector(0,-3,0), new PVector(0,-1, 0));
   
 //  size(1600, 900, P3D);
 
 
-  castle = new VoxelCastle(2f, 42);
+  //castle = new VoxelCastle(2f, 42);
 
 
 
@@ -533,8 +533,8 @@ void draw() {
   
   pushMatrix();
   translate(0, 90, 0);
-  bgHill1.draw();
-  bgHill2.draw();
+  //bgHill1.draw();
+  //bgHill2.draw();
   popMatrix();
 
 /*
@@ -553,7 +553,7 @@ void draw() {
   popMatrix();
 
 
-  castle.draw();
+  //castle.draw();
 
 
 }
