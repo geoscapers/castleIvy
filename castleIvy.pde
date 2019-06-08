@@ -464,11 +464,14 @@ import org.demotweaker.ui.*;
 Tweaker tweaker;
 Terrain castleHill;
 Ivy ivy;
+ActionCam camera;
 
 void setup() {
 
 
-    tweaker = new Tweaker();
+  tweaker = new Tweaker();
+
+  camera = new ActionCam(tweaker);
 
 
  // size(1600, 900, P3D);
@@ -476,7 +479,7 @@ void setup() {
   size(1067, 600, P3D);
   castleHill = new Terrain();
   ivy =  new Ivy(new PVector(0,5,30), new PVector(0,-1, 0));
-
+  
 //  size(1600, 900, P3D);
 
   // Setup hue saturation brightness based colors
@@ -493,6 +496,8 @@ void setup() {
 
 void draw() {
   tweaker.update();
+  
+  camera.update();
   
   // Clear to black
   background(50);
