@@ -114,21 +114,3 @@ void drawCylinder(PVector direction, PVector startpos, PVector endpos, float bot
    }
    endShape();
  }  
-
-
-private PVector tempV1 = new PVector();
-private PVector tempV2 = new PVector();
-private PVector tempV3 = new PVector();
-private PVector tempVn = new PVector();
-
-/** Creates and adds a normal for a specified triangle */
-void triangleNormal(float x1, float y1, float z1, 
-                    float x2, float y2, float z2,
-                    float x3, float y3, float z3) {
-                      
-    tempV1.set(x1, y1, z1);
-    tempV2.set(x2, y2, z2);
-    tempV3.set(x3, y3, z3);
-    
-  //  tempV1.cross(,,)
-}
