@@ -463,21 +463,26 @@ import org.demotweaker.ui.*;
 
 Tweaker tweaker;
 Terrain castleHill;
-
+Ivy ivy;
 
 void setup() {
+
+
+    tweaker = new Tweaker();
+
 
  // size(1600, 900, P3D);
   //size(800, 450, P3D);
   size(1067, 600, P3D);
   castleHill = new Terrain();
+  ivy =  new Ivy(new PVector(0,5,30), new PVector(0,-1, 0));
 
 //  size(1600, 900, P3D);
 
   // Setup hue saturation brightness based colors
   colorMode(HSB, 100f, 100f, 100f);
 
-  tweaker = new Tweaker();
+
   //tweaker.openEditor();
   
   // No lines between polygons
@@ -511,6 +516,11 @@ void draw() {
   fill(0f, 20f, 40f);
   sphere(3);
   popMatrix();
+  
+
+
+  ivy.drawIvy();
+
 
 }
   
