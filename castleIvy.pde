@@ -484,9 +484,9 @@ void setup() {
  // size(1600, 900, P3D);
   //size(800, 450, P3D);
   size(1067, 600, P3D);
-  castleHill = new Terrain(7, 0.005, 0.5, -30, 2);
-  bgHill1 = new Terrain(13, 0.0026, 0.000015, -135, 5);
-  bgHill2 = new Terrain(25, 0.0008, 0.0005, -150, 9);
+  castleHill = new Terrain(7, 0.005, 0.5, -30, 2, true);
+  bgHill1 = new Terrain(13, 0.0026, 0.000015, -135, 5, false);
+  bgHill2 = new Terrain(25, 0.0008, 0.0005, -150, 9, false);
   
   ivy =  new Ivy(new PVector(0,-3,0), new PVector(0,-1, 0));
   
@@ -522,11 +522,11 @@ void draw() {
 
   // Setup lights
   directionalLight(80, 50, 100, 0, -1, 0);
-  directionalLight(30, 80, 80, -0.5, 0.8, 0.1);
+  directionalLight(13, 20, 80, -0.5, 0.8, 0.1);
 
-  directionalLight(20, 20, 100, 0.2, -0.3, -0.3);
+//  directionalLight(20, 20, 100, 0.2, -0.3, -0.3);
 
-  ambientLight(70,30,30);
+  ambientLight(70,30,10);
   
   pushMatrix();
   castleHill.draw();
@@ -538,15 +538,14 @@ void draw() {
   bgHill2.draw();
   popMatrix();
 
-/*
   // Calibration sphere
   pushMatrix();
+  noStroke();
   translate(0, 0, 0);
   //translate(0f, 0f, 100f);
   fill(0f, 20f, 40f);
-  sphere(3);
+  sphere(1);
   popMatrix();
-  */
 
 
   pushMatrix();
