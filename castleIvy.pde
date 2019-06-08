@@ -491,15 +491,12 @@ void setup() {
   
 //  size(1600, 900, P3D);
 
-<<<<<<< HEAD
   
   
-=======
   // Setup hue saturation brightness based colors
   colorMode(HSB, 100f, 100f, 100f);
   
   castle = new Castle();
->>>>>>> 25183351d323d8f8ebabb8833317da4a8c6fb8c9
 
 
   //tweaker.openEditor();
