@@ -466,7 +466,11 @@ Terrain castleHill;
 Ivy ivy;
 
 void setup() {
+<<<<<<< HEAD
     tweaker = new Tweaker();
+=======
+  tweaker = new Tweaker();
+>>>>>>> 3be17f9727572c1ec1c48108b6fc54ce76ec0887
 
  // size(1600, 900, P3D);
   //size(800, 450, P3D);
@@ -479,7 +483,10 @@ void setup() {
   // Setup hue saturation brightness based colors
   colorMode(HSB, 100f, 100f, 100f);
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 3be17f9727572c1ec1c48108b6fc54ce76ec0887
   //tweaker.openEditor();
   
   // No lines between polygons
@@ -514,7 +521,11 @@ void draw() {
   sphere(3);
   popMatrix();
   
+<<<<<<< HEAD
   ivy.drawIvy();
+=======
+  println(secondsFromStart());
+>>>>>>> 3be17f9727572c1ec1c48108b6fc54ce76ec0887
 
 }
   

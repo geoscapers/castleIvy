@@ -71,7 +71,7 @@ void vertex(PVector v){
 
 /** Returns number of seconds since the start of the demo.  */
 float secondsFromStart() {
-  return (float) tweaker.getDurationSeconds();  
+  return (float) tweaker.getTime().getCurrentStepElapsedSeconds();
 }
 
 

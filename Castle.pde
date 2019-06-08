@@ -23,8 +23,9 @@ class Castle {
 
 
 class Cell {
-  
   Int3 location = new Int3();
   
   
+  void draw() {
+  }
 }
