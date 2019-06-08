@@ -1,14 +1,18 @@
 class Ivy{
   PlantSegment root; 
   int segmentAmount; 
-  float maxSegmentLenght = 1;
-  float growthSpeed = 0.5;  
+  //1 = 1m
+  float maxSegmentLenght = 0.1;
+  float segmentBranchLenght = 0.8*maxSegmentLenght;
+  float growthSpeed = 0.01;  
   //amount of sides in the sylinder of the ivy branches 
   int segmentSideAmount = 10;
+  PVector upDirection;
   
   
-  Ivy(float posx, float posy, float posz){
-    root = new PlantSegment(posx, posy, posz, this);
+  Ivy(PVector startpos, PVector upDirection){
+    this.upDirection = upDirection;
+    root = new PlantSegment(startpos, this);
   } 
   
   void updateIvy(){

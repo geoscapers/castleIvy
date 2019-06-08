@@ -510,7 +510,7 @@ void draw() {
   translate(0, 0, 0);
   //translate(0f, 0f, 100f);
   fill(0f, 20f, 40f);
-  sphere(100);
+  sphere(3);
   popMatrix();
 
 }

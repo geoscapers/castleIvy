@@ -1,20 +1,23 @@
 class Terrain {
   
   int size = 100;
-  float cellSize = 50;
+  float cellSize = 5;
   float[][] heights = new float[size][size];
   
   Terrain() {
-    for(int x = 0; x < size - 1; x++) {
-     for (int y = 0; y < size - 1; y++) {
-         heights[x][y] = noise(x * 0.1, y * 0.1) * cellSize * size * 0.05;
+    for(int x = 0; x < size; x++) {
+     for (int z = 0; z < size; z++) {
+         float pikkukumpare= noise(x * 0.1, z * 0.1) * cellSize * size * 0.05;
+         float kumpare = (sin(x / size * PI) * sin(z / size * PI)) * size;
+         heights[x][z] = kumpare * 2 + pikkukumpare * 1;
      }
     }
   }
   
   void draw() {
+    pushMatrix();
     fill(40, 50, 80);
-    translate(-200, 100, -100);
+    translate(-cellSize * size / 2, 50, -cellSize * size / 2);
     
     beginShape(TRIANGLES);
     
@@ -25,6 +28,7 @@ class Terrain {
     }
     
     endShape();
+    popMatrix();
   }
   
   void drawCell(int cellX, int cellZ) {
