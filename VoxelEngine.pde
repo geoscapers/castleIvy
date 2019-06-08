@@ -116,7 +116,7 @@ class Voxels {
   private 
   void drawFace(PVector center, PVector u, PVector v) {
     
-    makeRectangle
+    //makeRectangle
     
   }
   
