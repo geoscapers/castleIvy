@@ -114,8 +114,7 @@ class Cell {
       drawBlock(col, 
                 x + w * 0.5, y - h, z + w * 0.5,
                 w + overlap, t, w + overlap);
-    }
-    
+    }    
   }
 
   void drawBlock(color col, float cx, float cy, float cz, float sx, float sy, float sz) {

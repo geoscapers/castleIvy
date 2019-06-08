@@ -172,22 +172,22 @@ class Voxels {
     fill(c);
     
     addScaled(tC.set(center), unitX, voxelSize*0.5f);
-    drawFace(tC, unitY, unitZ);
+    drawFace(tC, unitY, unitZ, false);
 
     addScaled(tC.set(center), unitX, -voxelSize*0.5f);
-    drawFace(tC, unitZ, unitY);
+    drawFace(tC, unitZ, unitY, true);
 
     addScaled(tC.set(center), unitY, voxelSize*0.5f);
-    drawFace(tC, unitX, unitZ);
+    drawFace(tC, unitX, unitZ, false);
 
     addScaled(tC.set(center), unitY, -voxelSize*0.5f);
-    drawFace(tC, unitZ, unitX);
+    drawFace(tC, unitZ, unitX, true);
 
     addScaled(tC.set(center), unitZ, voxelSize*0.5f);
-    drawFace(tC, unitY, unitX);
+    drawFace(tC, unitY, unitX, false);
 
     addScaled(tC.set(center), unitZ, -voxelSize*0.5f);
-    drawFace(tC, unitX, unitY);
+    drawFace(tC, unitX, unitY, true);
 
   }
   
@@ -195,7 +195,7 @@ class Voxels {
   private PVector tempB  = new PVector();
   private PVector tempC  = new PVector();
   private PVector tempD  = new PVector();
-  void drawFace(PVector center, PVector u, PVector v) {
+  void drawFace(PVector center, PVector u, PVector v, boolean flip) {
     
     tempA.set(center);
     tempB.set(center);
@@ -214,7 +214,12 @@ class Voxels {
     addScaled(tempD, u, -voxelSize * 0.5f);
     addScaled(tempD, v,  voxelSize * 0.5f);
 
-    makeRectangle(tempA, tempB, tempC, tempD);    
+    if (flip) {
+      makeRectangle(tempA, tempB, tempC, tempD);
+    }
+    else {
+      makeRectangle(tempD, tempC, tempB, tempA);
+    }
   }
   
 }

@@ -165,7 +165,7 @@ void makeTriangle(PVector a, PVector b, PVector c) {
   mtTempNormal.normalize();
   
   // Triangle corners and their normals
-  normal(tempVn.x, tempVn.y, tempVn.z);
+  normal(mtTempNormal.x, mtTempNormal.y, mtTempNormal.z);
   vertex(a.x, a.y, a.z);
   vertex(b.x, b.y, b.z);
   vertex(c.x, c.y, c.z);

@@ -470,7 +470,8 @@ VoxelCastle castle;
 ActionCam camera;
 
 void setup() {
-
+   randomSeed(42);
+   noiseSeed(1234);
 
   tweaker = new Tweaker();
 
@@ -492,7 +493,7 @@ void setup() {
 //  size(1600, 900, P3D);
 
 
-  castle = new VoxelCastle(2f, 42);
+  castle = new VoxelCastle(1f, 653);
 
 
 

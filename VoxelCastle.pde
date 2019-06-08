@@ -7,12 +7,12 @@ class VoxelCastle {
   long seed;
   
   int volumeX = 100;
-  int volumeY = 50;
+  int volumeY = 70;
   int volumeZ = 100;
   
   VoxelCastle(float voxelSize, long seed) {
     voxels = new Voxels(voxelSize, volumeX, volumeY, volumeZ);
-    voxels.position.y -= 3; // Move more underground
+    voxels.position.y -= 10; // Move more underground
     this.seed = seed;
     random.setSeed(seed);
     
@@ -40,44 +40,59 @@ class VoxelCastle {
       generateRubble(random.nextInt(10, volumeX - 10), random.nextInt(10, volumeX - 10), random.nextInt(4, 10), random.nextInt(10, 300), seed + i + 11);     
     }
     
+    int baseY = 20;
+    
     // Default castle
-      generateWalls(50, 0, 55, 30, 23, 5, 4, 8, 1, 4, seed + 6);
+    //  generateWalls(50, 0, 55, 30, 23, 5, 4, 8, 1, 4, seed + 6);
 
     // Generate several concentric castles
-    int castleNum = random.nextInt(5, 10);
+    int castleNum = 3;
     for (int i = 0; i < castleNum; i++) {
-      /*
+      float relCenter = map(i, 0, castleNum-1, 0, 1);
+      float baseSize = map(i, 0, castleNum -1, volumeX * 0.6, volumeX * 0.2);
+      int minLevels = (int) map(relCenter, 0, 1, 1, 3);
       generateWalls(
-        random.nextInt(30, volumeX - 20),
-        40, 0, 55, 30, 23, 5, 4, 8, 1, 4, seed + 6);
-    */
+        (int) random.nextGaussianFloat(volumeX/2, baseSize*0.2),
+        baseY,
+        (int) random.nextGaussianFloat(volumeZ/2, baseSize*0.2),
+        (int) random.nextGaussianFloat(baseSize, baseSize*0.2),
+        (int) random.nextGaussianFloat(baseSize, baseSize*0.2),
+        random.nextInt(2 + i*2, 3 + i * 4),
+        random.nextInt(4, 6),
+        random.nextInt(4, 10),
+        minLevels,
+        random.nextInt(minLevels + i, minLevels + i * 2),
+        baseY,
+        seed + 17 * i);
     }
+    
+    // Central tower
+    generateTower(volumeX/2, baseY, volumeZ/2, 12, 12, 10, 4, 3, 0.8, baseY, seed + 71);
   }
   
-  void generateWalls(int centerX, int baseY, int centerZ, int sizeX, int sizeZ, int wallHeight, int wallWidth, int towerDiam, int towerMinLevels, int towerMaxLevels, long seed) {
+  void generateWalls(int centerX, int baseY, int centerZ, int sizeX, int sizeZ, int wallHeight, int wallWidth, int towerDiam, int towerMinLevels, int towerMaxLevels, int foundationDepth, long seed) {
     random.setSeed(seed);
     float windowProb = 0.5;
-    generateTower(centerX - sizeX/2, baseY, centerZ - sizeZ/2, towerDiam, towerDiam, 8, random.nextInt(towerMinLevels,towerMaxLevels), 2, windowProb, seed+1);
-    generateTower(centerX + sizeX/2, baseY, centerZ - sizeZ/2, towerDiam, towerDiam, 8, random.nextInt(towerMinLevels,towerMaxLevels), 2, windowProb, seed+2);
-    generateTower(centerX - sizeX/2, baseY, centerZ + sizeZ/2, towerDiam, towerDiam, 8, random.nextInt(towerMinLevels,towerMaxLevels), 2, windowProb, seed+3);
-    generateTower(centerX + sizeX/2, baseY, centerZ + sizeZ/2, towerDiam, towerDiam, 8, random.nextInt(towerMinLevels,towerMaxLevels), 2, windowProb, seed+4);
+    generateTower(centerX - sizeX/2, baseY, centerZ - sizeZ/2, towerDiam, towerDiam, 8, random.nextInt(towerMinLevels,towerMaxLevels), 2, windowProb, foundationDepth, seed+1);
+    generateTower(centerX + sizeX/2, baseY, centerZ - sizeZ/2, towerDiam, towerDiam, 8, random.nextInt(towerMinLevels,towerMaxLevels), 2, windowProb, foundationDepth, seed+2);
+    generateTower(centerX - sizeX/2, baseY, centerZ + sizeZ/2, towerDiam, towerDiam, 8, random.nextInt(towerMinLevels,towerMaxLevels), 2, windowProb, foundationDepth, seed+3);
+    generateTower(centerX + sizeX/2, baseY, centerZ + sizeZ/2, towerDiam, towerDiam, 8, random.nextInt(towerMinLevels,towerMaxLevels), 2, windowProb, foundationDepth, seed+4);
     
     int wallsOverhang = 0;
-    generateTower(centerX + sizeX/2, baseY, centerZ, wallWidth, sizeZ, wallHeight, 1, wallsOverhang, 0f, seed+4);
-    generateTower(centerX - sizeX/2, baseY, centerZ, wallWidth, sizeZ, wallHeight, 1, wallsOverhang, 0f, seed+4);
-    generateTower(centerX, baseY, centerZ - sizeZ/2, sizeX, wallWidth, wallHeight, 1, wallsOverhang, 0f, seed+4);
-    generateTower(centerX, baseY, centerZ + sizeZ/2, sizeX, wallWidth, wallHeight, 1, wallsOverhang, 0f, seed+4);
-    
+    generateTower(centerX + sizeX/2, baseY, centerZ, wallWidth, sizeZ, wallHeight, 1, wallsOverhang, 0f, foundationDepth, seed+7);
+    generateTower(centerX - sizeX/2, baseY, centerZ, wallWidth, sizeZ, wallHeight, 1, wallsOverhang, 0f, foundationDepth, seed+8);
+    generateTower(centerX, baseY, centerZ - sizeZ/2, sizeX, wallWidth, wallHeight, 1, wallsOverhang, 0f, foundationDepth, seed+9);
+    generateTower(centerX, baseY, centerZ + sizeZ/2, sizeX, wallWidth, wallHeight, 1, wallsOverhang, 0f, foundationDepth, seed+11);
   }
   
-  void generateTower(int centerX, int baseY, int centerZ, int sizeX, int sizeZ, int levelHeight, int levels, int overhang, float windowProb, long seed) {
+  void generateTower(int centerX, int baseY, int centerZ, int sizeX, int sizeZ, int levelHeight, int levels, int overhang, float windowProb, int foundationDepth, long seed) {
     // Rooms
     for (int level = 0; level < levels; level++) {
       generateRoom(centerX, baseY + level * levelHeight, centerZ, sizeX, levelHeight, sizeZ, windowProb, seed + level * 31);
     }
     
     // Wide roof
-    int roofBase = levels * levelHeight;
+    int roofBase = baseY + levels * levelHeight;
     int upperWidthX = sizeX + overhang * 2;
     int upperWidthZ = sizeZ + overhang * 2;
     makeWall(centerX, roofBase, centerZ, upperWidthX, 1, upperWidthZ, false);
@@ -88,6 +103,8 @@ class VoxelCastle {
     generateCrenellations(centerX - upperWidthX/2, roofBase + 1, centerZ, upperWidthZ, true, 2, 2, 0, 2);
     generateCrenellations(centerX + upperWidthX/2, roofBase + 1, centerZ, upperWidthZ, true, 2, 2, 0, 2);
     
+    // Foundation
+    generateRoom(centerX, baseY - foundationDepth-1, centerZ, sizeX, foundationDepth, sizeZ, 0, seed * 12);
   }
   
   void generateRubble(int centerX, int centerZ, float radius, int count, long seed) {
