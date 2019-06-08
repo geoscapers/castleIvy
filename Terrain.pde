@@ -1,3 +1,4 @@
+
 class Terrain {
   
   int size = 30;
@@ -117,12 +118,10 @@ class Terrain {
     tempVn.normalize();
     
     
+    normal(tempVn.x, tempVn.y, tempVn.z);
     vertex(xA, yA, zA);
-    normal(tempVn.x, tempVn.y, tempVn.z);
     vertex(xB, yB, zB);
-    normal(tempVn.x, tempVn.y, tempVn.z);
     vertex(xC, yC, zC);
-    normal(tempVn.x, tempVn.y, tempVn.z);
   }
 }
 

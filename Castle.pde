@@ -18,11 +18,12 @@ void getCastleDistance(PVector position, PVector vectorToClosestWall) {
 class Castle {
   HashMap<Int3, Cell> cells = new HashMap();
 
-  float cellWidth = 1.7f;
-  float cellHeight = 2.6f;
-  float wallThickness = cellWidth * 0.1;
+  float cellWidth = 3f;
+  float cellHeight = 4f;
+  float wallThickness = cellWidth * 0.15;
   float wallOverlap = wallThickness * 0.5;
   
+  color col = color(random(70, 90), random(5, 30), random(20, 40));
   
   PVector pos = new PVector();
   
@@ -74,8 +75,7 @@ class Castle {
 class Cell {
   Int3 location = new Int3();
   Castle castle;
-  
-  color col = color(random(70, 90), random(5, 30), random(20, 40));
+  color col;  
   
   boolean westWall = true;
   boolean northWall = true;
@@ -84,6 +84,7 @@ class Cell {
   Cell(Castle castle, Int3 location) {
     this.castle = castle;
     this.location.set(location);
+    col = castle.col;
   }
   
   void draw() {
@@ -122,16 +123,31 @@ class Cell {
     fill(col);
     box(sx, sy, sz);
     
-    sphereDetail(7, 7);
+    sphereDetail(6, 5);
     castle.random.setSeed(location.x, location.y, location.z);    
-    for (int i = 0; i < 8; i++) {
+    for (int i = 0; i < 30; i++) {
+
+      
+      fill(hue(col) + castle.random.nextFloat(-5, 5), 
+           saturation(col) + castle.random.nextFloat(-10, 10), 
+           brightness(col) + castle.random.nextFloat(-15, 15));
+      
       float dx = castle.random.nextFloat(-sx/2, sx/2);
       float dy = castle.random.nextFloat(-sy/2, sy/2);
       float dz = castle.random.nextFloat(-sz/2, sz/2);
-      float r = 0.1f * max(sx, sy, sz);
+      float r = max(sx, sy, sz) * castle.random.nextFloat(0.08f, 0.14f);
+      pushMatrix();
       translate(dx, dy, dz);
+      float scaling = 0.5;
+      scale(1f + castle.random.nextFloat(-scaling, scaling),
+            1f + castle.random.nextFloat(-scaling, scaling),
+            1f + castle.random.nextFloat(-scaling, scaling));
+      rotateX(castle.random.nextFloat(0, TAU));
+      rotateY(castle.random.nextFloat(0, TAU));
+      rotateZ(castle.random.nextFloat(0, TAU));
       sphere(r);
-      translate(-dx, -dy, -dz);
+      //translate(-dx, -dy, -dz);
+      popMatrix();
     }
     
     translate(-cx, -cy, -cz);  
