@@ -35,6 +35,10 @@ class Int3 {
     this.z = z;
   }
 
+  void set(Int3 i) {
+    set(i.x, i.y, i.z);
+  }
+
   @Override int hashCode() {
     return ((((x * 31) + y) * 31) + z) * 31;     
   }
