@@ -11,11 +11,11 @@ class Ivy{
   
   
   Ivy(PVector startpos, PVector upDirection){
-    this.upDirection = upDirection;
+    this.upDirection.set(upDirection);
     root = new PlantSegment(startpos, this);
   } 
   
-  void updateIvy(){
+  private void updateIvy(){
     //if anything of the ivy needs to be updated do it here
     
     //then update the root (and all the following branches)
@@ -23,6 +23,7 @@ class Ivy{
   }
   
   void drawIvy(){
+    updateIvy();
     
     //draw one segment at a time
     root.drawSegment();

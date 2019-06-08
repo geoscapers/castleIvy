@@ -463,7 +463,7 @@ import org.demotweaker.ui.*;
 
 Tweaker tweaker;
 Terrain castleHill;
-
+Ivy ivy;
 
 void setup() {
 
@@ -471,6 +471,7 @@ void setup() {
   //size(800, 450, P3D);
   size(1067, 600, P3D);
   castleHill = new Terrain();
+  ivy =  new Ivy(new PVector(0,0,0), new PVector(0,-1, 0));
 
 //  size(1600, 900, P3D);
 
@@ -511,6 +512,8 @@ void draw() {
   fill(0f, 20f, 40f);
   sphere(3);
   popMatrix();
+  
+  ivy.drawIvy();
 
 }
   
