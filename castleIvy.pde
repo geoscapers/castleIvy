@@ -464,6 +464,7 @@ import org.demotweaker.ui.*;
 Tweaker tweaker;
 Terrain castleHill;
 Ivy ivy;
+Castle castle;
 ActionCam camera;
 
 void setup() {
@@ -485,8 +486,15 @@ void setup() {
   
 //  size(1600, 900, P3D);
 
+<<<<<<< HEAD
   
   
+=======
+  // Setup hue saturation brightness based colors
+  colorMode(HSB, 100f, 100f, 100f);
+  
+  castle = new Castle();
+>>>>>>> 25183351d323d8f8ebabb8833317da4a8c6fb8c9
 
 
   //tweaker.openEditor();
@@ -522,6 +530,7 @@ void draw() {
   castleHill.draw();
   popMatrix();
 
+/*
   // Calibration sphere
   pushMatrix();
   translate(0, 0, 0);
@@ -529,13 +538,15 @@ void draw() {
   fill(0f, 20f, 40f);
   sphere(3);
   popMatrix();
-  
+  */
 
 
   pushMatrix();
   ivy.drawIvy();
   popMatrix();
 
+
+  castle.draw();
 
 
 }
