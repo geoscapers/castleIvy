@@ -19,4 +19,13 @@ class Castle {
 
   
   
+  
+}
+
+
+class Room {
+  
+  Int3 location = new Int3();
+  
+  
 }

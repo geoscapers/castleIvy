@@ -483,6 +483,7 @@ void setup() {
   // No lines between polygons
   // noStroke();
   fill(80);
+  tweaker.
 }
 
 
@@ -494,7 +495,7 @@ void draw() {
 
   // Center screen
   translate(width/2f, height/2f);
-  scale(height/1000.0);
+  scale(height/100.0);
 
   // Setup lights
   //directionalLight(80, 50, 40, 0, -1, 0);
