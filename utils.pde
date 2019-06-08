@@ -55,6 +55,18 @@ class Int3 {
    
 }
 
+private PVector tempScaled = new PVector();
+
+void addScaled(PVector v, PVector v2, float scale){
+  tempScaled.set(v2);
+  tempScaled.mult(scale);
+  v.add(tempScaled);
+}  
+
+void vertex(PVector v){
+ vertex(v.x, v.y, v.z);
+} 
+
 
 
 /** Returns number of seconds since the start of the demo.  */
