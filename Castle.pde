@@ -16,13 +16,13 @@ void getCastleDistance(PVector position, PVector vectorToClosestWall) {
 
 
 class Castle {
-
+  HashMap<Int3, Cell> cells = new HashMap();
   
   
 }
 
 
-class Room {
+class Cell {
   
   Int3 location = new Int3();
   
