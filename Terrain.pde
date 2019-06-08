@@ -59,7 +59,7 @@ class Terrain {
   
   void drawGrass(int cellX, int cellZ) {
     
-    strokeWeight(0.15);
+    strokeWeight(2);
     
     int grassAmount = 5;
     for (int x = 0; x < grassAmount; x++) {
@@ -76,7 +76,7 @@ class Terrain {
         float gX = cellX * cellSize + dX;
         float gZ = cellZ * cellSize + dZ;
         
-        float shuffle = cellSize * 0.3;
+        float shuffle = cellSize * 0.2;
         float tX = map(noise(gX, gZ), 0, 1, -shuffle, shuffle);
         float tZ = map(noise(gX + 113.35, gZ + 142.93), 0, 1, -shuffle, shuffle);
         
@@ -92,15 +92,16 @@ class Terrain {
         float yB = map(x, 0, grassAmount, y3, y4);
         float yC = map(z, 0, grassAmount, yA, yB);
         
-        float windSpeed = 0.2;
-        float windAmount = cellSize * 0.2;
-        float wX = map(noise(secondsFromStart() * windSpeed), 0, 1, -windAmount, windAmount);
-        float wZ = map(noise(secondsFromStart() + 225.49 * windSpeed + 249.92), 0, 1, -windAmount, windAmount);
+        float windSpeed = 0.25;
+        float windAmount = cellSize * 0.4;
+        float wX = map(noise(secondsFromStart() * windSpeed + gX * 437), 0, 1, -windAmount, windAmount);
+        float wZ = map(noise(secondsFromStart() * windSpeed + 949.92 + gZ * 154), 0, 1, -windAmount, windAmount);
         
         stroke(30, 60, 40);
         vertex(gX, yC, gZ);
         stroke(30, 60, 70);
-        vertex(gX + wX, yC - 5, gZ);
+        vertex(gX + wX, yC - 4, gZ + wZ);
+
       }
       
     }
@@ -108,7 +109,7 @@ class Terrain {
   }
   
   void drawTriangle(float xA, float yA, float zA, float xB, float yB, float zB, float xC, float yC, float zC) {
-    
+    noStroke();
     tempV1.set(xB - xA, yB - yA, zB - zA);
     tempV2.set(xC - xA, yC - yA, zC - zA);
     
@@ -122,9 +123,6 @@ class Terrain {
     normal(tempVn.x, tempVn.y, tempVn.z);
     vertex(xC, yC, zC);
     normal(tempVn.x, tempVn.y, tempVn.z);
-  }
-  
-  void updateGrass() {
   }
 }
 
