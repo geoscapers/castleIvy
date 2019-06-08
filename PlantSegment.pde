@@ -4,28 +4,22 @@ class PlantSegment{
   PlantSegment branchSegment; 
   Leaf leaf;
   Ivy plant;
-  float startX;
-  float startY; 
-  float startZ;
-  float endX;
-  float endY;
-  float endZ;
+  PVector startpos;
+  PVector endpos;
   float startThickness;
   float endThickness;
+  PVector direction;
  
  /*
  Construction for the root segment, when there is no parentSegment
  */
- PlantSegment(float startx, float starty, float startz, Ivy plant){
-   this.startX = startx;
-   this.endX = startx;
-   this.startY = starty;
-   this.endY = starty;
-   this.startZ = startz;
-   this.endZ = startz; 
+ PlantSegment(PVector startpos, Ivy plant){
+   this.startpos = startpos;
+   this.endpos = startpos; 
    this.plant = plant;
    this.startThickness = 0;
    this.endThickness = 0;
+   
  }
  
  /*
@@ -33,15 +27,12 @@ class PlantSegment{
  */
  PlantSegment(PlantSegment parent, Ivy plant){
    this.parent = parent;
-   this.startX = parent.startX;
-   this.endX = parent.startX;
-   this.startY = parent.startY;
-   this.endY = parent.startY;
-   this.startZ = parent.startZ;
-   this.endZ = parent.startZ; 
+   this.startpos = parent.startpos;
+   this.endpos = parent.startpos;
    this.plant = plant;
    this.startThickness = parent.endThickness;
    this.endThickness = 0;
+   
  }  
  
  void update(){
