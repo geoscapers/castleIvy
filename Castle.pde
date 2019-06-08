@@ -18,8 +18,8 @@ void getCastleDistance(PVector position, PVector vectorToClosestWall) {
 class Castle {
   HashMap<Int3, Cell> cells = new HashMap();
 
-  float cellWidth = 3f;
-  float cellHeight = 4f;
+  float cellWidth = 1.7f;
+  float cellHeight = 2.6f;
   float wallThickness = cellWidth * 0.1;
   float wallOverlap = wallThickness * 0.5;
   
