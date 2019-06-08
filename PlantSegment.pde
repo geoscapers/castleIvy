@@ -61,7 +61,7 @@ class PlantSegment{
        map(noise(noiseseed+noisepos+113.13), 0, 1, -plant.turnstrength, plant.turnstrength), 
        map(noise(noiseseed+noisepos+231.12), 0, 1, -plant.turnstrength, plant.turnstrength), 
        map(noise(noiseseed+noisepos+21.21), 0, 1, -plant.turnstrength, plant.turnstrength));
-   direction.add(plant.upDirection.x*0.05, plant.upDirection.y*0.05, plant.upDirection.z*0.050);   
+   direction.add(plant.upDirection.x*0.07, plant.upDirection.y*0.07, plant.upDirection.z*0.07);   
    direction.normalize();
    this.segmentLength = 0;
    plant.addSegmentAmount();
@@ -86,12 +86,31 @@ class PlantSegment{
    this.noiseseed = random(0f, 100f);
    plant.addSegmentAmount();
    segmentcount = parent.segmentcount +1;
-   branchProbability = 0.4*parent.branchProbability;
+   branchProbability = 0.2*parent.branchProbability;
    
  } 
  
  void update(){
    //add here code for updating this segment
+   //thickness
+   if (parent != null){
+     startThickness = parent.endThickness;
+     
+     endThickness = startThickness*0.97;
+     //if no branch end in a tip
+     if (nextSegment == null && branchSegment == null){
+       endThickness = 0;
+     } 
+     //othervise put a minimum width
+     else{
+       if (endThickness < 0.005)endThickness = 0.005;
+     }  
+   }
+   else{
+     endThickness = startThickness*0.97;
+   }
+   
+   
    //if the previous segment have changed it's endpos then update our startpos
    boolean startposChanged = false;
    if (parent != null && !parent.endpos.equals(startpos)){
@@ -151,7 +170,7 @@ class PlantSegment{
    pushMatrix();
    
   
-   drawCylinder(direction, startpos, endpos, 0.1, endThickness,10);
+   drawCylinder(direction, startpos, endpos, startThickness, endThickness,10);
    
    
    popMatrix();

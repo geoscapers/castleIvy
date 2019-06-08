@@ -2,11 +2,11 @@ class Ivy{
   PlantSegment root; 
   int segmentAmount = 0; 
   //1 = 1m
-  float maxSegmentLenght = 1;
+  float maxSegmentLenght = 0.1;
   float segmentBranchLenght = 0.9*maxSegmentLenght;
   float segmentChildbirtLengt = 0.5*maxSegmentLenght;
-  float growthSpeed = 0.05; 
-  float branchProbability = 0.2;
+  float growthSpeed = 0.005; 
+  float branchProbability = 0.05;
   
   
   //amount of sides in the sylinder of the ivy branches 
@@ -16,9 +16,11 @@ class Ivy{
   float secondFromPreviousUpdate;
   float branchAngle = 45;
   float branchWildness = 1.2;
-  float turnstrength = 0.6;
+  float turnstrength = 0.5;
   int branchamount = 1;
-  int maxBranchLength = 100;
+  int maxBranchLength = 1000;
+  float maxBranchWidth = 0.15;
+  float branchGrowth = 0.01;
   
   
   
@@ -27,6 +29,7 @@ class Ivy{
     root = new PlantSegment(startpos, this);
    previousSecondsFromStart = secondsFromStart();
    secondFromPreviousUpdate = secondsSince(previousSecondsFromStart);
+   
   } 
   
   void addSegmentAmount(){
@@ -42,11 +45,14 @@ class Ivy{
     secondFromPreviousUpdate = secondsSince(previousSecondsFromStart);
     previousSecondsFromStart = secondsFromStart();
     
+    root.startThickness += branchGrowth*secondFromPreviousUpdate;
+    
     //then update the root (and all the following branches)
     root.update();
   }
   
   void drawIvy(){
+    noStroke();
     updateIvy();
     
     //draw one segment at a time
