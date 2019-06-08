@@ -1,15 +1,19 @@
 class Ivy{
   PlantSegment root; 
-  int segmentAmount; 
+  int segmentAmount = 0; 
   //1 = 1m
   float maxSegmentLenght = 1;
-  float segmentBranchLenght = 0.8*maxSegmentLenght;
-  float growthSpeed = 0.01;  
+  float segmentBranchLenght = 0.9*maxSegmentLenght;
+  float segmentChildbirtLengt = 0.5*maxSegmentLenght;
+  float growthSpeed = 0.05; 
+  float branchProbability = 0.05;
   //amount of sides in the sylinder of the ivy branches 
   int segmentSideAmount = 10;
   PVector upDirection = new PVector();
   float previousSecondsFromStart;
   float secondFromPreviousUpdate;
+  float branchAngle = 45;
+  
   
   
   Ivy(PVector startpos, PVector upDirection){
@@ -18,6 +22,10 @@ class Ivy{
    previousSecondsFromStart = secondsFromStart();
    secondFromPreviousUpdate = secondsSince(previousSecondsFromStart);
   } 
+  
+  void addSegment(){
+    segmentAmount++;
+  }  
   
   private void updateIvy(){
     //if anything of the ivy needs to be updated do it here
