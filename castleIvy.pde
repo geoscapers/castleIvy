@@ -466,6 +466,7 @@ Terrain castleHill;
 
 
 void setup() {
+  tweaker = new Tweaker();
 
  // size(1600, 900, P3D);
   //size(800, 450, P3D);
@@ -477,7 +478,6 @@ void setup() {
   // Setup hue saturation brightness based colors
   colorMode(HSB, 100f, 100f, 100f);
 
-  tweaker = new Tweaker();
   //tweaker.openEditor();
   
   // No lines between polygons
@@ -511,6 +511,8 @@ void draw() {
   fill(0f, 20f, 40f);
   sphere(3);
   popMatrix();
+  
+  println(secondsFromStart());
 
 }
   
