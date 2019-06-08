@@ -14,6 +14,8 @@ class PlantSegment{
   int segmentcount;
   boolean branchTried = false;
   float noiseseed = 0;
+  float branchProbability = 0;
+  boolean branchEnding = false;
   
  
  /*
@@ -28,9 +30,10 @@ class PlantSegment{
    this.direction.set(plant.upDirection);
    direction.normalize();
    this.segmentLength = 0;
-   plant.addSegment();
+   plant.addSegmentAmount();
    segmentcount = 1;
    noiseseed = 0;
+   branchProbability = plant.branchProbability;
    
    
  }
@@ -52,15 +55,16 @@ class PlantSegment{
    float noisepos = segmentcount/2f;
    this.direction.set(parent.direction);
    direction.normalize();
-   float noiseamount = 0.5;
+   branchProbability = parent.branchProbability;
+  
    this.direction.add(
-       map(noise(noiseseed+noisepos+113.13), 0, 1, -noiseamount, noiseamount), 
-       map(noise(noiseseed+noisepos+231.12), 0, 1, -noiseamount, noiseamount), 
-       map(noise(noiseseed+noisepos+21.21), 0, 1, -noiseamount, noiseamount));
-   direction.add(0, -0.05, 0);   
+       map(noise(noiseseed+noisepos+113.13), 0, 1, -plant.turnstrength, plant.turnstrength), 
+       map(noise(noiseseed+noisepos+231.12), 0, 1, -plant.turnstrength, plant.turnstrength), 
+       map(noise(noiseseed+noisepos+21.21), 0, 1, -plant.turnstrength, plant.turnstrength));
+   direction.add(plant.upDirection.x*0.05, plant.upDirection.y*0.05, plant.upDirection.z*0.050);   
    direction.normalize();
    this.segmentLength = 0;
-   plant.addSegment();
+   plant.addSegmentAmount();
    
    
  }  
@@ -80,8 +84,9 @@ class PlantSegment{
    direction.normalize();
    this.segmentLength = 0;
    this.noiseseed = random(0f, 100f);
-   plant.addSegment();
+   plant.addSegmentAmount();
    segmentcount = parent.segmentcount +1;
+   branchProbability = 0.4*parent.branchProbability;
    
  } 
  
@@ -110,20 +115,28 @@ class PlantSegment{
        endpos.add(startpos);
    } 
    //if we do not have yet, then make next segment if we are long enough
-   if (segmentLength > plant.segmentChildbirtLengt && nextSegment == null){
-       nextSegment = new PlantSegment(this, plant);  
-       //println("new segment");
+   if (segmentLength > plant.segmentChildbirtLengt && nextSegment == null && !branchEnding){
+       if (random(0,1) > segmentcount/plant.maxBranchLength){
+                nextSegment = new PlantSegment(this, plant);  
+               //println("new segment");
+       }
+       else{
+         branchEnding = true;
+       }
+         
+
    } 
    //if we are long enough to branch and have not tried to do that yet, do it
    if (segmentLength > plant.segmentBranchLenght && branchTried == false){
      branchTried = true;
      float r = random(0, 1);
-     if (r < plant.branchProbability){
+     if (r < branchProbability){
        //createBranch successfull
        PVector d = direction.copy();
-       float branchWildness = 1.2;
-       d.add(random(-branchWildness, branchWildness), random(-branchWildness, branchWildness), random(-branchWildness, branchWildness));
+       
+       d.add(random(-plant.branchWildness, plant.branchWildness), random(-plant.branchWildness, plant.branchWildness), random(-plant.branchWildness, plant.branchWildness));
        branchSegment = new PlantSegment(this, plant, d.normalize());
+       
      }  
    }  
    
