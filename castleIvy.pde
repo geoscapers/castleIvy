@@ -494,7 +494,7 @@ void draw() {
 
   // Center screen
   translate(width/2f, height/2f);
-  scale(height/1000.0);
+  scale(height/100.0);
 
   // Setup lights
   //directionalLight(80, 50, 40, 0, -1, 0);
@@ -509,7 +509,7 @@ void draw() {
   translate(0, 0, 0);
   //translate(0f, 0f, 100f);
   fill(0f, 20f, 40f);
-  sphere(100);
+  sphere(3);
   popMatrix();
 
 }
