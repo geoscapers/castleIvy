@@ -105,7 +105,7 @@ private PVector dcTempNorm = new PVector();
 private PVector tempDir = new PVector();
 
 void drawCylinder(PVector startpos, PVector endpos, float bottomwidth, float topwidth,int sides){
-   tempDir.set(1, 0, 0);
+   tempDir.set(0, -1, 0);
    drawCylinder(tempDir, startpos, endpos, bottomwidth, topwidth,sides);
 }
 
@@ -147,6 +147,54 @@ void drawCylinder(PVector direction, PVector startpos, PVector endpos, float bot
    endShape();
  }  
 
+void drawTree(PVector startpos, PVector endpos, float bottomwidth, float bottomwidth2, float topwidth,int sides){
+   tempDir.set(0, -1, 0);
+   drawTree(tempDir, startpos, endpos, bottomwidth, bottomwidth2, topwidth, sides);
+}
+
+void drawTree(PVector direction, PVector startpos, PVector endpos, float bottomwidth, float bottomwidth2, float topwidth,int sides){
+   
+   if (direction.equals(t)){
+       t.set(0,0,1);
+   }  
+   t.cross(direction, u);
+   u.cross(direction, v);
+   u.normalize();
+   v.normalize();
+   
+   float angle = 0;
+   float angleIncrement = TWO_PI / sides;
+   beginShape(QUAD_STRIP);
+   for (int i = 0; i < sides + 1; ++i) {
+     
+     // Normal is straight out
+     dcTempNorm.set(0,0,0);     
+     addScaled(dcTempNorm,u,cos(angle));
+     addScaled(dcTempNorm,v,sin(angle));
+     normal(dcTempNorm.x, dcTempNorm.y, dcTempNorm.z);
+     
+     // Bottom pos
+     tempR1.set(startpos);
+     if (i % 2 == 0) {
+       addScaled(tempR1,u,cos(angle)*bottomwidth2);
+       addScaled(tempR1,v,sin(angle)*bottomwidth2);
+       vertex(tempR1);
+     } else {
+       addScaled(tempR1,u,cos(angle)*bottomwidth);
+       addScaled(tempR1,v,sin(angle)*bottomwidth);
+       vertex(tempR1);
+     }
+     
+     // Top pos
+     tempR2.set(endpos);
+     addScaled(tempR2,u,cos(angle)*topwidth);
+     addScaled(tempR2,v,sin(angle)*topwidth);
+     vertex(tempR2);
+     
+     angle += angleIncrement;
+   }
+   endShape();
+ }  
 
 void makeRectangle(PVector a, PVector b, PVector c, PVector d) {
   makeTriangle(a, b, d);  

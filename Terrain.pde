@@ -54,23 +54,16 @@ class Terrain {
     
     endShape();
 
-    
-    //if (showGrass == true) {
-     //beginShape(LINES);
-    
-      for(int x = 0; x < size - 1; x++) {
-       for (int z = 0; z < size - 1; z++) {
-           drawGrass(x, z);
-         
-       }
-      }
-      //endShape();
-     
-    //} else {
-     // beginShape(TRIANGLES);
-      
-    //}
-      
+    for(int x = 0; x < size - 1; x++) {
+     for (int z = 0; z < size - 1; z++) {
+       if (showGrass == true) {
+         drawItems(x, z, 5, cellSize * 0.2);
+       } else {
+         drawItems(x, z, 2, cellSize * 0.8); 
+       }    
+     }
+    }
+   
     popMatrix();
   }
   
@@ -92,26 +85,20 @@ class Terrain {
     
   }
   
-  void drawGrass(int cellX, int cellZ) {
+  void drawItems(int cellX, int cellZ, int grassAmount, float shuffle) {
     
     strokeWeight(2);
-    
-    int grassAmount = 5;
+
     for (int x = 0; x < grassAmount; x++) {
       
       for (int z = 0; z < grassAmount; z++) {
         
-        
-        
         float dX = x * 1f / grassAmount * cellSize;
-        
-        
         float dZ = z * 1f / grassAmount * cellSize;
         
         float gX = cellX * cellSize + dX;
         float gZ = cellZ * cellSize + dZ;
         
-        float shuffle = cellSize * 0.2;
         float tX = map(noise(gX, gZ), 0, 1, -shuffle, shuffle);
         float tZ = map(noise(gX + 113.35, gZ + 142.93), 0, 1, -shuffle, shuffle);
         
@@ -137,25 +124,21 @@ class Terrain {
           
           stroke(28, 50, 30);
           vertex(gX, yC, gZ);
-          stroke(24, 50, 60);
+          stroke(28, 50, 50);
           vertex(gX + wX, yC - 2, gZ + wZ);
           
           endShape();
-        /*} else {
+        } else {
           beginShape(TRIANGLES);
           
           noStroke();
         
           start.set(gX, yC + 0.1, gZ);
-          end.set(gX, yC - 2, gZ);
+          end.set(gX, yC - 8, gZ);
          
-          drawCylinder(start, end, 2, 0.1, 3);
-          endShape();*/
+          drawTree(start, end, 3, 1, 0.1, 20);
+          endShape();
         }
-        
-        
-        
-
       } 
     }
   }
@@ -188,11 +171,7 @@ class Terrain {
     noStroke();
     tempV1.set(xB - xA, yB - yA, zB - zA);
     tempV2.set(xC - xA, yC - yA, zC - zA);
-    
-    
-    //PVector.cross(tempV1, tempV2, tempVn);
-    //tempVn.normalize();    
-    
+     
     calculateNormal(cellXA, cellZA);
     vertex(xA, yA, zA);
     
