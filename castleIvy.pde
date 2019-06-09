@@ -469,10 +469,14 @@ Ivy ivy;
 VoxelCastle castle;
 ActionCam camera;
 
+Variable fade;
+
 void setup() {
+   randomSeed(42);
+   noiseSeed(5);
 
-
-  tweaker = new Tweaker();
+  tweaker = new Tweaker(dataPath("tweakerSettings.json"));
+  fade = tweaker.variable("fade", 1.0);
 
   camera = new ActionCam(tweaker);
   
@@ -494,7 +498,7 @@ void setup() {
 //  size(1600, 900, P3D);
 
 
-  //castle = new VoxelCastle(2f, 42);
+  castle = new VoxelCastle(0.8f, -10, -15, 0, 653);
 
 
 
@@ -522,12 +526,10 @@ void draw() {
 
 
   // Setup lights
-  directionalLight(80, 50, 100, 0, -1, 0);
+  directionalLight(80, 30, 30, 0.2, 0.2, 0.1);
   directionalLight(13, 20, 80, -0.5, 0.8, 0.1);
-
 //  directionalLight(20, 20, 100, 0.2, -0.3, -0.3);
-
-  ambientLight(70,30,10);
+  ambientLight(70,20,40);
   
   pushMatrix();
   castleHill.draw();
@@ -540,13 +542,15 @@ void draw() {
   popMatrix();
 
   // Calibration sphere
+  /*
   pushMatrix();
   noStroke();
-  translate(0, 0, 0);
+  translate(40, 0, 0);
   //translate(0f, 0f, 100f);
   fill(0f, 20f, 40f);
-  sphere(1);
+  sphere(30);
   popMatrix();
+  */
 
 
   pushMatrix();

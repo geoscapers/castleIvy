@@ -1,18 +1,5 @@
 
 
-void getCastleDistance(PVector position, PVector vectorToClosestWall) {
-  
-  float centerX = 0;
-  float centerZ = 0;
-  float radius = 3;
-  
-  vectorToClosestWall.set(
-    centerX - position.x,
-    0,
-    centerZ - position.z);
-}
-
-
 
 
 class Castle {
@@ -114,8 +101,7 @@ class Cell {
       drawBlock(col, 
                 x + w * 0.5, y - h, z + w * 0.5,
                 w + overlap, t, w + overlap);
-    }
-    
+    }    
   }
 
   void drawBlock(color col, float cx, float cy, float cz, float sx, float sy, float sz) {
