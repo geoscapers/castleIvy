@@ -512,9 +512,9 @@ void setup() {
   // size(1600, 900, P3D);
   //size(800, 450, P3D);
   //size(1067, 600, P3D);
-  size(1600, 900, P3D);
+  // size(1600, 900, P3D);
+  fullScreen(P3D); // Uncomment for compo
   noCursor();
-  // fullScreen(); // Uncomment for compo
 
   castleHill = new Terrain(7, 0.005, 0.5, -30, 2, true);
   bgHill1 = new Terrain(13, 0.0026, 0.000015, -135, 5, false);
@@ -523,12 +523,12 @@ void setup() {
 
   ivy1 =  new Ivy(new PVector(0, 3, 0), new PVector(0, -1, 0));
   //this is a short ivy, default maxBranchLength is 900
-  ivy2 =  new Ivy(new PVector(30, 14,-44), new PVector(0,-1, 0), 400);
-  ivy3 =  new Ivy(new PVector(-44, 14, 0), new PVector(0, -1, 0));
-  ivy4 =  new Ivy(new PVector(-10, 14, -44), new PVector(0, -1, 0));
-  ivy5 =  new Ivy(new PVector(10, 14, 45), new PVector(0, -1, 0));
-  ivy6 =  new Ivy(new PVector(40, 14, 36), new PVector(0, -1, 0));
-  ivy7 =  new Ivy(new PVector(-40, 14, -45), new PVector(0, -1, 0));
+  ivy2 =  new Ivy(new PVector(30, 14,-32), new PVector(0,-1, 0), 400);
+  ivy3 =  new Ivy(new PVector(-35, 14, 0), new PVector(0, -1, 0));
+  ivy4 =  new Ivy(new PVector(-10, 14, -33), new PVector(0, -1, 0));
+  ivy5 =  new Ivy(new PVector(10, 14, 35), new PVector(0, -1, 0));
+  ivy6 =  new Ivy(new PVector(35, 16, 32), new PVector(0, -1, 0));
+  ivy7 =  new Ivy(new PVector(-32, 16, -35), new PVector(0, -1, 0));
 
   //  size(1600, 900, P3D);
 
@@ -537,7 +537,8 @@ void setup() {
 
   setupStars();
 
-  tweaker.openEditor();
+  // Tweaking editor
+//  tweaker.openEditor();
   
   initCredits();
 

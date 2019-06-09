@@ -52,7 +52,7 @@ class ActionCam {
       activateChaseCam(ivy1.branchPos, ivy1.branchPos, cameraMode, cameraDistance, chaseAcceleration);
     }
     else if (cameraMode == 4) {
-      activateChaseCam(ivy3.branchPos, ivy3.branchPos, cameraMode, cameraDistance, chaseAcceleration);
+      activateChaseCam(ivy3.branchPos, ivy4.branchPos, cameraMode, cameraDistance, chaseAcceleration);
     }
     else if (cameraMode == 5) {
       activateChaseCam(ivy5.branchPos, ivy5.branchPos, cameraMode, cameraDistance, chaseAcceleration);
@@ -66,6 +66,9 @@ class ActionCam {
       focus.set(towerPos);
       chaseCamera(hoverPos, chaseAcceleration);
     }
+    else if (cameraMode == 7) {
+      activateChaseCam(ivy5.branchPos, ivy2.branchPos, cameraMode, cameraDistance, chaseAcceleration);
+    }
    
     prevCameraMode = cameraMode;
     prevCameraPos.set(position);
@@ -73,7 +76,7 @@ class ActionCam {
 
   void activateChaseCam(PVector target, PVector foc, int mode, float dist, float acc) {
     if (prevCameraMode != mode) {
-      position.set(target).add(0.4, -dist*0.8, 1);
+      position.set(target).add(-0.4, -dist*0.8, -1);
       cameraVel.set(0,0,0);
     }
     

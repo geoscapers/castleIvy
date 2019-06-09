@@ -5,10 +5,10 @@ String credits =
   "\n" +
   "by GeoScapers\n" +
   "\n" +
-  "coded in 34 hours\n" +
+  "coded in 29 hours\n" +
   "for Graffathon 2019\n" +
   "\n" +
-  "  Ivy by shiera\n" +
+  "  Ivy by Shiera\n" +
   "  Castle by fractalpixel\n" +
   "  Background by SierraFox\n" +
   "\n" +
@@ -31,9 +31,11 @@ void initCredits() {
 void drawCredits() {
   
   float relPos = tweaker.value("creditsPos", -1);
+  fill(0, 0, 100, 75);
   if (relPos > -0.99f) {
+    lights();
     float creditPos = -relPos * height;
-    fill(0, 0, 100, 80);
+    fill(0, 0, 100, 75);
     text(credits, width * 0.2f, creditPos);
   }  
 }

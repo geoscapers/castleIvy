@@ -39,7 +39,7 @@ class VoxelCastle {
     // Lets have some rubble
     int rubblePiles = random.nextInt(5, 20);
     for (int i = 0; i < rubblePiles; i++) {
-      generateRubble(random.nextInt(30, volumeX - 30), random.nextInt(30, volumeX - 30), random.nextInt(4, 10), random.nextInt(10, 300), seed + i + 11);     
+      generateRubble(random.nextInt(30, volumeX - 30), random.nextInt(30, volumeX - 30), random.nextInt(3, 7), random.nextInt(10, 700), seed + i + 11);     
     }
     
     int baseY = 20;

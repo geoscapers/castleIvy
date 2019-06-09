@@ -11,7 +11,7 @@ class Ivy{
   //langth at wich a segment checks if it grows a child
   float segmentChildbirtLengt = 0.5*maxSegmentLenght;
   //the speed that the segments grow
-  float growthSpeed = 0.02; 
+  float growthSpeed = 0.03; 
   //the porbability that a new branch is formed, this is the base probability, it will drop in every branch, 
   //and if it does not happen there is a lower chanse a shorter branch will form
   float branchProbability = 0.052;
@@ -57,7 +57,7 @@ class Ivy{
   //probability that there will be a leaf in a segment (if there is a branch there is no leaf, and if it is the end there is always a leaf)
   float leafprob = 0.5;
   //the thicknessloss in the beginning
-  float startticknessLoss = 0.96;
+  float startticknessLoss = 0.955;
   //parameter to multipy the thickness with for every next segment, bigger will make it thicker fr longer
   float thicknesLoss = startticknessLoss;
   //the thicknesslos will change to a bigger walue when the plant is of certain age, to make it a bit wider 
@@ -65,21 +65,21 @@ class Ivy{
   //this is the segmentamount where the thicknessfuncton will be the new one
   int segmentToChangeLoss = 800;
   //the rate on wich fresh color changes 
-  float freshColorChangeRate = 0.2;
+  float freshColorChangeRate = 0.3;
   //the rate on wich the branch get broun
   float colorChangeRate = 0.03;
   //the rate on wich the leafs turn dark
-  float leafColorChangeRate = 0.1;
+  float leafColorChangeRate = 0.2;
   
   
   //color of you g sprouts and young leafs
-  color sproutColor = color(26, 36, 68);
+  color sproutColor = color(30, 38, 68);
   //middlecolor of the branch, 
   color branchColor = color(33, 53, 50);
   //color of the root of the branch, and old branches
   color rootColor = color(5, 26, 30);
   //basecolor of the leafs, the leaf is randomisating this a bit
-  color leafColor = color(35, 25, 40);
+  color leafColor = color(35, 31, 40);
   //basecolor of the leafs for the autum
   color leafColorAutum = color(10, 80, 70);
   
