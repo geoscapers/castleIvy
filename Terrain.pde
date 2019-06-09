@@ -6,37 +6,36 @@ class Terrain {
   float[][] heights;
   PVector start;
   PVector end;
-  float kumparePIkerroin;
+  float kumpareDepth;
   float kumparePIsiirto;
   float kumpareKorkeus;
-  float kumpareMuuttuja;
+  float surfaceRandomization;
   boolean showGrass;
   
   PShape terrainShape;
   
-  Terrain(float cellSize, float kumparePIkerroin, float kumparePIsiirto, float kumpareKorkeus, float kumpareMuuttuja, boolean showGrass) {
+  Terrain(float cellSize, float kumpareDepth, float kumparePIsiirto, float kumpareKorkeus, float surfaceRandomization, boolean showGrass) {
     
     this.size = 30;
     this.cellSize = cellSize;
-    this.kumparePIkerroin = kumparePIkerroin;
+    this.kumpareDepth = kumpareDepth;
     this.kumparePIsiirto = kumparePIsiirto;
     this.end = new PVector();
     this.start = new PVector();
     this.heights = new float[size][size];
     this.kumpareKorkeus = kumpareKorkeus;
-    this.kumpareMuuttuja = kumpareMuuttuja;
+    this.surfaceRandomization = surfaceRandomization;
     this.showGrass = showGrass;
     
     this.terrainShape = createShape();
     
     for(int x = 0; x < size; x++) {
      for (int z = 0; z < size; z++) {
-         float pikkukumpare= noise(x * 0.1 + kumpareMuuttuja * 234.982, z * 0.1 + kumpareMuuttuja * 123.123) * cellSize * size * 0.05;
-         //float kumpare = (sin(1.0 * x / size * PI * kumparePIkerroin + PI * kumparePIsiirto) * sin(1.0 * z / size * PI * kumparePIkerroin + PI * kumparePIsiirto));
+         float pikkukumpare= noise(x * 0.1 + surfaceRandomization * 234.982, z * 0.1 + surfaceRandomization * 123.123) * cellSize * size * 0.05;
          float worldX = x * cellSize - size / 2 * cellSize;
          float worldZ = z * cellSize - size / 2 * cellSize;
          float distance = sqrt(worldX * worldX + worldZ * worldZ);
-         float kumpare = sin(distance * kumparePIkerroin * PI + kumparePIsiirto * PI);
+         float kumpare = sin(distance * kumpareDepth * PI + kumparePIsiirto * PI);
          
          heights[x][z] = kumpare * kumpareKorkeus + pikkukumpare * -4;
      }
@@ -93,16 +92,16 @@ class Terrain {
     
   }
   
-  void drawItems(int cellX, int cellZ, int grassAmount, float shuffle) {
+  void drawItems(int cellX, int cellZ, int itemAmount, float shuffle) {
     
     strokeWeight(2);
 
-    for (int x = 0; x < grassAmount; x++) {
+    for (int x = 0; x < itemAmount; x++) {
       
-      for (int z = 0; z < grassAmount; z++) {
+      for (int z = 0; z < itemAmount; z++) {
         
-        float dX = x * 1f / grassAmount * cellSize;
-        float dZ = z * 1f / grassAmount * cellSize;
+        float dX = x * 1f / itemAmount * cellSize;
+        float dZ = z * 1f / itemAmount * cellSize;
         
         float gX = cellX * cellSize + dX;
         float gZ = cellZ * cellSize + dZ;
@@ -118,9 +117,9 @@ class Terrain {
         float y3 = heights[cellX][cellZ + 1];
         float y4 = heights[cellX + 1][cellZ + 1];
         
-        float yA = map(x, 0, grassAmount, y1, y2);
-        float yB = map(x, 0, grassAmount, y3, y4);
-        float yC = map(z, 0, grassAmount, yA, yB);
+        float yA = map(x, 0, itemAmount, y1, y2);
+        float yB = map(x, 0, itemAmount, y3, y4);
+        float yC = map(z, 0, itemAmount, yA, yB);
         
         float windSpeed = 0.25;
         float windAmount = cellSize * 0.2;
