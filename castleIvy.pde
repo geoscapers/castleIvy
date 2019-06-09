@@ -478,7 +478,7 @@ Ivy ivy3;
 Ivy ivy4;
 Ivy ivy5;
 Ivy ivy6;
-Ivy ivy7;
+//Ivy ivy7;
 VoxelCastle castle;
 ActionCam camera;
 
@@ -528,7 +528,7 @@ void setup() {
   ivy4 =  new Ivy(new PVector(-10, 14, -33), new PVector(0, -1, 0));
   ivy5 =  new Ivy(new PVector(10, 14, 35), new PVector(0, -1, 0));
   ivy6 =  new Ivy(new PVector(35, 16, 32), new PVector(0, -1, 0));
-  ivy7 =  new Ivy(new PVector(-32, 16, -35), new PVector(0, -1, 0));
+  //ivy7 =  new Ivy(new PVector(-32, 16, -35), new PVector(0, -1, 0));
 
   //  size(1600, 900, P3D);
 
@@ -631,7 +631,7 @@ void draw() {
   ivy4.drawIvy();
   ivy5.drawIvy();
   ivy6.drawIvy();
-  ivy7.drawIvy();
+//  ivy7.drawIvy();
   popMatrix();
 
   //if (secondsFromStart() > 60) castle.draw();

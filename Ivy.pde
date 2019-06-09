@@ -37,9 +37,9 @@ class Ivy{
   //running count on amount of branches 
   int branchamount = 1;
   //maximum segment amount in a branch (depth from root)
-  int maxBranchLength = 900;
+  int maxBranchLength = 740;
   //maximum amount of branches
-  float maxBranchAmount = 30;
+  float maxBranchAmount = 25;
   //maximum width of the plant at the root
   float maxBranchWidth = 0.5;
   //growthspeed of the branch
