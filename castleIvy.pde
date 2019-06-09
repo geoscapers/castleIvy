@@ -505,23 +505,23 @@ Minim minim;
 AudioPlayer audioPlayer;
 
 void setup() {
-   randomSeed(42);
-   noiseSeed(5);
+  randomSeed(42);
+  noiseSeed(5);
 
   tweaker = new Tweaker(dataPath("tweakerSettings.json"), DEMO_LENGTH_SECONDS, BEATS_PER_MINUTE / 60.0f);
   fade = tweaker.variable("fade", 1.0);
 
   minim = new Minim(this);
   audioPlayer = minim.loadFile(MUSIC_FILE); // Load music from data directory  
-  
-  
+
+
   camera = new ActionCam(tweaker);
-  
+
   // Setup hue saturation brightness based colors
   colorMode(HSB, 100f, 100f, 100f);
 
 
- // size(1600, 900, P3D);
+  // size(1600, 900, P3D);
   //size(800, 450, P3D);
   size(1067, 600, P3D);
 
@@ -529,28 +529,26 @@ void setup() {
   bgHill1 = new Terrain(13, 0.0026, 0.000015, -135, 5, false);
   bgHill2 = new Terrain(25, 0.0008, 0.0005, -150, 9, false);
 
-  
-  ivy1 =  new Ivy(new PVector(0,3,0), new PVector(0,-1, 0));
- // ivy2 =  new Ivy(new PVector(20,15,10), new PVector(0,-1, 0));
-  ivy3 =  new Ivy(new PVector(-30,15,0), new PVector(0,-1, 0));
-  ivy4 =  new Ivy(new PVector(-10,15,-30), new PVector(0,-1, 0));
-  ivy5 =  new Ivy(new PVector(10,15,33), new PVector(0,-1, 0));
-  
-//  size(1600, 900, P3D);
 
+  ivy1 =  new Ivy(new PVector(0, 3, 0), new PVector(0, -1, 0));
+  // ivy2 =  new Ivy(new PVector(20,15,10), new PVector(0,-1, 0));
+  ivy3 =  new Ivy(new PVector(-30, 15, 0), new PVector(0, -1, 0));
+  ivy4 =  new Ivy(new PVector(-10, 15, -30), new PVector(0, -1, 0));
+  ivy5 =  new Ivy(new PVector(10, 15, 33), new PVector(0, -1, 0));
 
-  castle = new VoxelCastle(2f, 42);
+  //  size(1600, 900, P3D);
+
 
   castle = new VoxelCastle(0.8f, -10, -15, 0, 653);
 
 
 
   tweaker.openEditor();
-  
+
   // No lines between polygons
   noStroke();
   fill(80);
-  
+
   // Start playing music
   audioPlayer.play();
 }
@@ -562,26 +560,26 @@ void draw() {
   scale(height/100.0);
 
   tweaker.update();
-  
-  
+
+
   // Clear to black
   background(50);
   drawSky();
 
-  
-    camera.update();
+
+  camera.update();
 
 
   // Setup lights
   directionalLight(80, 30, 30, 0.2, 0.2, 0.1);
   directionalLight(13, 20, 80, -0.5, 0.8, 0.1);
-//  directionalLight(20, 20, 100, 0.2, -0.3, -0.3);
-  ambientLight(70,20,40);
-  
+  //  directionalLight(20, 20, 100, 0.2, -0.3, -0.3);
+  ambientLight(70, 20, 40);
+
   pushMatrix();
   castleHill.draw();
   popMatrix();
-  
+
   pushMatrix();
   translate(0, 90, 0);
   bgHill1.draw();
@@ -591,18 +589,18 @@ void draw() {
   // Calibration sphere
   /*
   pushMatrix();
-  noStroke();
-  translate(40, 0, 0);
-  //translate(0f, 0f, 100f);
-  fill(0f, 20f, 40f);
-  sphere(30);
-  popMatrix();
-  */
+   noStroke();
+   translate(40, 0, 0);
+   //translate(0f, 0f, 100f);
+   fill(0f, 20f, 40f);
+   sphere(30);
+   popMatrix();
+   */
 
 
   pushMatrix();
   ivy1.drawIvy();
- // ivy2.drawIvy();
+  // ivy2.drawIvy();
   ivy3.drawIvy();
   ivy4.drawIvy();
   ivy5.drawIvy();
@@ -610,19 +608,15 @@ void draw() {
 
 
   castle.draw();
-  
+
   // Check for end
   if (tweaker.getTime().getCurrentStepElapsedSeconds() > DEMO_LENGTH_SECONDS) {
     // Time to quit
     exit();
   }
-
-
 }
 
 void mouseWheel(MouseEvent event) {
   float e = event.getCount();
   camera.changeDistance(e * 10f);
 }
-
-  
