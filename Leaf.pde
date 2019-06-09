@@ -2,69 +2,103 @@
 class Leaf{
   PlantSegment parentSegment;
   Ivy plant;
-  private PVector p1 = new PVector();
-  private PVector p2 = new PVector();
-  private PVector p3 = new PVector();
+  
   color leafCol;
+  color autumCol;
+  color currentSummerColor;
   
   float leafsize = 0;
   float maxLeafsize = 1;
   float leafBirthSecondFromStart;
+  PVector randomDirection;
   
   Leaf(Ivy plant, PlantSegment parentSegment){
     this.plant = plant;
     this.parentSegment = parentSegment;
     leafBirthSecondFromStart = secondsFromStart();
     leafCol = color(hue(plant.leafColor+(int)(random(-10, 10))), saturation(plant.leafColor)+(int)(random(-10, 10)), brightness(plant.leafColor)+(int)(random(-10, 10)));
-    
-  }
+    autumCol = color(hue(plant.leafColorAutum +(int)(random(-10, 10))), saturation(plant.leafColorAutum )+(int)(random(-25, 15)), brightness(plant.leafColorAutum )+(int)(random(-15, 15)));
+    currentSummerColor = leafCol;
+    randomDirection = new PVector(random(0, 3), random(-0.5, 1), random(-1, 1));
+}
   
   
   void updateLeaf(){
       //do all of the updating of the leaf here
-      leafsize += plant.leafGrowthSpeed;
+      leafsize += plant.leafGrowthSpeed*plant.secondFromPreviousUpdate;
       if (leafsize > maxLeafsize) leafsize = maxLeafsize;
   }
   
   void drawLeaf(){
-     float colorage = secondsSince(leafBirthSecondFromStart)*plant.leafColorChangeRate;
-     if (colorage > 1) colorage = 1;
-     fill(lerpColor(plant.sproutColor, leafCol, colorage));
+    plant.rnd.setSeed(parentSegment.segmentcount+plant.ivyseed);
+     //when no autum is near all is green
+    if (plant.atumness == 0){
+       float colorage = secondsSince(leafBirthSecondFromStart)*plant.leafColorChangeRate;
+       if (colorage > 1) colorage = 1;
+       currentSummerColor = lerpColor(plant.sproutColor, leafCol, colorage);
+       fill(currentSummerColor);
+    }
+    //when autum starts
+     else {
+        fill(lerpColor(currentSummerColor, autumCol, plant.atumness));
+     }  
+    if (!plant.leafGoBoom){
+        
      //do the drawing of the leaf here
      pushMatrix();
      
      translate(parentSegment.endpos.x,parentSegment.endpos.y, parentSegment.endpos.z);
-     plant.rnd.setSeed(parentSegment.segmentcount+plant.ivyseed);
+     
      rotateX(TAU*(0.25));
      
      rotateZ(plant.rnd.nextFloat(TAU));
-     rotateX(-TAU*(plant.rnd.nextFloat(0.0, 0.1)));
+     rotateX(-TAU*(plant.rnd.nextFloat(0.0, 0.1))+(plant.atumness*TAU*0.15));
      translate(0, -parentSegment.endThickness, 0);
      scale(leafsize);
      drawPart();
      
      popMatrix();
+    } 
+    //when the leaf go boom
+    else{
+     pushMatrix();
+     
+     translate(
+         parentSegment.endpos.x+(randomDirection.x*secondsSince(plant.timeOfBoom)*plant.boomspeed),
+         parentSegment.endpos.y+(randomDirection.y*secondsSince(plant.timeOfBoom)*plant.boomspeed), 
+         parentSegment.endpos.z+(randomDirection.z*secondsSince(plant.timeOfBoom)*plant.boomspeed));
+     plant.rnd.setSeed(parentSegment.segmentcount+plant.ivyseed);
+     rotateX(TAU*(0.25)+secondsSince(plant.timeOfBoom)*plant.rnd.nextFloat(0.9, 4));
+     
+     rotateZ(plant.rnd.nextFloat(TAU)+secondsSince(plant.timeOfBoom)*plant.rnd.nextFloat(0.5, 3));
+     rotateY(secondsSince(plant.timeOfBoom)*plant.rnd.nextFloat(1, 2));
+     
+    
+     scale(leafsize);
+     drawPart();
+     
+     popMatrix();
+    }  
   } 
-  private PVector tNormal = new PVector();
+  
   
   public void addTriangle(PVector p1, PVector p2, PVector p3) {
-  faceNormal(p1, p2, p3, tNormal);
-  normal(tNormal.x, tNormal.y, tNormal.z);
+  faceNormal(p1, p2, p3, plant.tNormal);
+  normal(plant.tNormal.x, plant.tNormal.y, plant.tNormal.z);
   vertex(p1);
   vertex(p2);
   vertex(p3);
 }
 
-private PVector t1 = new PVector();
-private PVector t2 = new PVector();
+
   PVector faceNormal(PVector p1, PVector p2, PVector p3, PVector normall) {
-    t1.set(p1);
-    t1.sub(p2);
+    plant.t1.set(p1);
+    plant.t1.sub(p2);
     
-    t2.set(p1);
-    t2.sub(p3);
+    plant.t2.set(p1);
+    plant.t2.sub(p3);
   
-    t1.cross(t2, normall);
+    plant.t1.cross(plant.t2, normall);
     return normall;
   }
   
@@ -84,25 +118,25 @@ private PVector t2 = new PVector();
       float relPos = map(i, 0, leafSegments, 0f, 1f);
       float nextRelPos = map(i + 1, 0, leafSegments, 0f, 1f);
       
-      leafEdgePoint(relPos, 0.5*leafWidth, leafLength, upTilt, p1);  
-      leafCenterPoint(relPos, leafLength, p2);
-      leafCenterPoint(nextRelPos, leafLength, p3);
-      addTriangle(p1, p2, p3);
+      leafEdgePoint(relPos, 0.5*leafWidth, leafLength, upTilt, plant.p1);  
+      leafCenterPoint(relPos, leafLength, plant.p2);
+      leafCenterPoint(nextRelPos, leafLength, plant.p3);
+      addTriangle(plant.p1, plant.p2, plant.p3);
 
-      leafCenterPoint(nextRelPos, leafLength, p1);
-      leafEdgePoint(nextRelPos, 0.5*leafWidth, leafLength, upTilt, p2);  
-      leafEdgePoint(relPos, 0.5*leafWidth, leafLength, upTilt, p3);  
-      addTriangle(p1, p2, p3);
+      leafCenterPoint(nextRelPos, leafLength, plant.p1);
+      leafEdgePoint(nextRelPos, 0.5*leafWidth, leafLength, upTilt, plant.p2);  
+      leafEdgePoint(relPos, 0.5*leafWidth, leafLength, upTilt, plant.p3);  
+      addTriangle(plant.p1, plant.p2, plant.p3);
       
-      leafCenterPoint(relPos, leafLength, p1);
-      leafEdgePoint(relPos, -0.5*leafWidth, leafLength, upTilt, p2);  
-      leafCenterPoint(nextRelPos, leafLength, p3);
-      addTriangle(p1, p2, p3);
+      leafCenterPoint(relPos, leafLength, plant.p1);
+      leafEdgePoint(relPos, -0.5*leafWidth, leafLength, upTilt, plant.p2);  
+      leafCenterPoint(nextRelPos, leafLength, plant.p3);
+      addTriangle(plant.p1, plant.p2, plant.p3);
 
-      leafEdgePoint(nextRelPos, -0.5*leafWidth, leafLength, upTilt, p1);  
-      leafCenterPoint(nextRelPos, leafLength, p2);
-      leafEdgePoint(relPos, -0.5*leafWidth, leafLength, upTilt, p3);  
-      addTriangle(p1, p2, p3);
+      leafEdgePoint(nextRelPos, -0.5*leafWidth, leafLength, upTilt, plant.p1);  
+      leafCenterPoint(nextRelPos, leafLength, plant.p2);
+      leafEdgePoint(relPos, -0.5*leafWidth, leafLength, upTilt, plant.p3);  
+      addTriangle(plant.p1, plant.p2, plant.p3);
       
     }
     
