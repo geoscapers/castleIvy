@@ -480,23 +480,7 @@ Ivy ivy5;
 VoxelCastle castle;
 ActionCam camera;
 
-Variable fade;
-
 String MUSIC_FILE = "Majestic Hills.mp3";
-
-String credits = 
-  "Forest Ivy Castle\n" +
-  "\n" +
-  "by GeoScapers\n" +
-  "for Graffathon 2019\n" +
-  "\n" +
-  "  Ivy by:         shiera\n" +
-  "  Castle by:      fractalpixel\n" +
-  "  Background by:  sierrafox\n" +
-  "\n" +
-  "Music: \"Majestic Hills\"\n" + 
-  "  by: Kevin MacLeod:\n" +
-  "  cc-by\n";
 
 float DEMO_LENGTH_SECONDS = 199;
 float BEATS_PER_MINUTE = 68;
@@ -507,9 +491,11 @@ AudioPlayer audioPlayer;
 void setup() {
   randomSeed(42);
   noiseSeed(5);
+  background(0);
 
   tweaker = new Tweaker(dataPath("tweakerSettings.json"), DEMO_LENGTH_SECONDS, BEATS_PER_MINUTE / 60.0f);
-  fade = tweaker.variable("fade", 1.0);
+  Variable cameraMode = tweaker.variable("cameraMode", 1.0);
+  cameraMode.setInterpolator(new PowInterpolator(10.0)); // We want camera mode to flip fast
 
   minim = new Minim(this);
   audioPlayer = minim.loadFile(MUSIC_FILE); // Load music from data directory  
@@ -518,12 +504,15 @@ void setup() {
   camera = new ActionCam(tweaker);
 
   // Setup hue saturation brightness based colors
-  colorMode(HSB, 100f, 100f, 100f);
+  colorMode(HSB, 100f, 100f, 100f, 100f);
 
 
   // size(1600, 900, P3D);
   //size(800, 450, P3D);
-  size(1067, 600, P3D);
+  //size(1067, 600, P3D);
+  size(1600, 900, P3D);
+  noCursor();
+  // fullScreen(); // Uncomment for compo
 
   castleHill = new Terrain(7, 0.005, 0.5, -30, 2, true);
   bgHill1 = new Terrain(13, 0.0026, 0.000015, -135, 5, false);
@@ -544,6 +533,8 @@ void setup() {
 
 
   tweaker.openEditor();
+  
+  initCredits();
 
   // No lines between polygons
   noStroke();
@@ -551,10 +542,31 @@ void setup() {
 
   // Start playing music
   audioPlayer.play();
+  
+  // Listen to restart from editor, restart music
+  tweaker.addListener(new StepListener() {
+      public void onUpdate(Time time) {
+      }
+      public void onRestarted(Time time) {
+        // Restart music
+        audioPlayer.rewind();
+        audioPlayer.play();
+      }
+      public void onPaused(Time time) {
+        audioPlayer.pause();
+      }
+      public void onPlaying(Time time) {
+        audioPlayer.play();
+      }
+  });
 }
 
 
 void draw() {
+  hint(ENABLE_DEPTH_TEST); 
+
+  pushMatrix();
+
   // Center screen
   translate(width/2f, height/2f);
   scale(height/100.0);
@@ -562,13 +574,17 @@ void draw() {
   tweaker.update();
 
 
-  // Clear to black
-  background(50);
+  // Daylights
+  float hue = tweaker.value("hue", 0f) % 100f; 
+  float sat = tweaker.value("sat", 0f); 
+  float lum = tweaker.value("lum", 0f); 
+
+  // Clear to sky
+  background(0);
   drawSky();
 
 
   camera.update();
-
 
   // Setup lights
   directionalLight(80, 30, 30, 0.2, 0.2, 0.1);
@@ -614,6 +630,21 @@ void draw() {
     // Time to quit
     exit();
   }
+
+
+  popMatrix();
+
+  // Fade
+  hint(DISABLE_DEPTH_TEST); 
+  float fade = tweaker.value("fade", 1f);
+  if (fade < 0.999) {
+    // Fade to black
+    fill(0, 0, 0, (1f - fade) * 100);
+    rect(0, 0, width, height);
+  }
+  
+  drawCredits();
+
 }
 
 void mouseWheel(MouseEvent event) {

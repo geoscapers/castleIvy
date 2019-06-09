@@ -13,6 +13,7 @@ class Terrain {
   boolean showGrass;
   
   PShape terrainShape;
+  boolean terrainBuilt = false;
   
   Terrain(float cellSize, float kumparePIkerroin, float kumparePIsiirto, float kumpareKorkeus, float kumpareMuuttuja, boolean showGrass) {
     
@@ -26,8 +27,6 @@ class Terrain {
     this.kumpareKorkeus = kumpareKorkeus;
     this.kumpareMuuttuja = kumpareMuuttuja;
     this.showGrass = showGrass;
-    
-    this.terrainShape = createShape();
     
     for(int x = 0; x < size; x++) {
      for (int z = 0; z < size; z++) {
@@ -43,39 +42,74 @@ class Terrain {
     }
   }
   
+  void rebuild() {
+    terrainBuilt = false;
+  }
+  
   void draw() {
+    if (!terrainBuilt) {
+      // This builds the ground and forest into terrainShape
+      terrainBuilt = true;
+      buildTerrain();
+    }
+    
+    // Draw the ground and forest (they don't move)
+    shape(terrainShape);
+    
+    // Draw grass, it moves from frame to frame in the wind
     pushMatrix();
     fill(29, 50, 65);
     translate(-cellSize * size / 2, 58, -cellSize * size / 2);
-    
-    beginShape(TRIANGLES);
-    
-    for(int x = 0; x < size - 1; x++) {
-     for (int z = 0; z < size - 1; z++) {
-         drawCell(x, z);
-     }
+    beginShape(LINES);
+    if (showGrass) {
+      for(int x = 0; x < size - 1; x++) {
+       for (int z = 0; z < size - 1; z++) {
+           float dX = x - size / 2;
+           float dZ = z - size / 2;
+           float centerDistance = sqrt(dX * dX + dZ * dZ);
+           float grassAmount = max(0, map(centerDistance, 0, size / 2.8, 20, 0));
+           drawItems(x, z, (int) grassAmount, cellSize * 0.2, true);
+         }    
+       }
     }
-    
-    endShape();
 
-    for(int x = 0; x < size - 1; x++) {
-     for (int z = 0; z < size - 1; z++) {
-       if (showGrass == true) {
-         float dX = x - size / 2;
-         float dZ = z - size / 2;
-         float centerDistance = sqrt(dX * dX + dZ * dZ);
-         float grassAmount = max(0, map(centerDistance, 0, size / 2.8, 20, 0));
-         drawItems(x, z, (int) grassAmount, cellSize * 0.2);
-       } else {
-         drawItems(x, z, 2, cellSize * 0.8); 
-       }    
-     }
+    // Trees
+    if (!showGrass) {
+      for(int x = 0; x < size - 1; x++) {
+        for (int z = 0; z < size - 1; z++) {
+        drawItems(x, z, 2, cellSize * 0.8, false); 
+       }
+      }
     }
-   
+
     popMatrix();
+    
+    
   }
   
-  void drawCell(int cellX, int cellZ) {
+  // Build the terrain into the terrainShape PShape 
+  void buildTerrain() {
+    terrainShape = createShape();
+    
+    terrainShape.translate(-cellSize * size / 2, 58, -cellSize * size / 2);
+    
+    
+    // Ground
+    terrainShape.beginShape(TRIANGLES);
+    terrainShape.noStroke();
+    terrainShape.fill(29, 50, 45);
+    for(int x = 0; x < size - 1; x++) {
+     for (int z = 0; z < size - 1; z++) {
+         drawCell(terrainShape, x, z);
+     }
+    }
+    terrainShape.endShape();
+    
+    
+    
+  }
+  
+  void drawCell(PShape terrainShape, int cellX, int cellZ) {
     float y1 = heights[cellX][cellZ];
     float y2 = heights[cellX + 1][cellZ];
     float y3 = heights[cellX][cellZ + 1];
@@ -87,13 +121,13 @@ class Terrain {
     float z1 = cellSize * cellZ;
     float z2 = cellSize * (cellZ + 1); 
     
-    drawTriangle(x1, y1, z1, x2, y2, z1, x1, y3, z2, cellX, cellZ, cellX + 1, cellZ, cellX, cellZ + 1);
-    drawTriangle(x2, y2, z1, x2, y4, z2, x1, y3, z2, cellX + 1, cellZ, cellX + 1, cellZ + 1, cellX, cellZ + 1);
+    drawTriangle(terrainShape, x1, y1, z1, x2, y2, z1, x1, y3, z2, cellX, cellZ, cellX + 1, cellZ, cellX, cellZ + 1);
+    drawTriangle(terrainShape, x2, y2, z1, x2, y4, z2, x1, y3, z2, cellX + 1, cellZ, cellX + 1, cellZ + 1, cellX, cellZ + 1);
    
     
   }
   
-  void drawItems(int cellX, int cellZ, int grassAmount, float shuffle) {
+  void drawItems(int cellX, int cellZ, int grassAmount, float shuffle, boolean drawGrass) {
     
     strokeWeight(2);
 
@@ -127,34 +161,38 @@ class Terrain {
         float wX = map(noise(secondsFromStart() * windSpeed + gX * 2.437 + gZ * 2.56), 0, 1, -windAmount, windAmount);
         float wZ = map(noise(secondsFromStart() * windSpeed + 9.4992 + gZ * 3.154  + gX * 4.65), 0, 1, -windAmount, windAmount);
         
-        if (showGrass == true) {
+        if (drawGrass == true) {
+          // Draw moving gras
           beginShape(LINES);
           
           stroke(28, 50, 30);
           vertex(gX, yC, gZ);
           stroke(28, 50, 50);
           vertex(gX + wX, yC - 2, gZ + wZ);
+
+          // Tip
+          vertex(gX + wX, yC - 2, gZ + wZ); // Same as the end point of the base section above
+          stroke(20, 40, 65);
+          float tipWindIncrease = 2.0f; // Increase wind to bow it more at the tip
+          vertex(gX + wX * tipWindIncrease, yC - 3, gZ + wZ * tipWindIncrease); 
           
           endShape();
         } else {
-          beginShape(TRIANGLES);
-          
           noStroke();
-        
+          // Trees, we draw these to the terrainShape PShape
           start.set(gX, yC + 0.1, gZ);
           end.set(gX, yC - 8, gZ);
          
           drawTree(start, end, 3, 1, 0.1, 20);
-          endShape();
         }
       } 
     }
   }
   
-  void calculateNormal(int x, int z) {
+  void calculateNormal(PShape terrainShape, int x, int z) {
     if (x <= 0 || x >= size - 1 ||
         z <= 0 || z >= size - 1) {
-       normal(0, -1, 0);
+       terrainShape.normal(0, -1, 0);
        return;
     }
     
@@ -170,24 +208,23 @@ class Terrain {
    
    tempVn.normalize();
    
-   normal(tempVn.x, tempVn.y, tempVn.z);
+   terrainShape.normal(tempVn.x, tempVn.y, tempVn.z);
   }
 
   
-  void drawTriangle(float xA, float yA, float zA, float xB, float yB, float zB, float xC, float yC, float zC, 
+  void drawTriangle(PShape terrainShape, float xA, float yA, float zA, float xB, float yB, float zB, float xC, float yC, float zC, 
                     int cellXA, int cellZA, int cellXB, int cellZB, int cellXC, int cellZC) {
-    noStroke();
     tempV1.set(xB - xA, yB - yA, zB - zA);
     tempV2.set(xC - xA, yC - yA, zC - zA);
      
-    calculateNormal(cellXA, cellZA);
-    vertex(xA, yA, zA);
+    calculateNormal(terrainShape, cellXA, cellZA);
+    terrainShape.vertex(xA, yA, zA);
     
-    calculateNormal(cellXB, cellZB);
-    vertex(xB, yB, zB);
+    calculateNormal(terrainShape, cellXB, cellZB);
+    terrainShape.vertex(xB, yB, zB);
     
-    calculateNormal(cellXC, cellZC);
-    vertex(xC, yC, zC);
+    calculateNormal(terrainShape, cellXC, cellZC);
+    terrainShape.vertex(xC, yC, zC);
   }
 }
 

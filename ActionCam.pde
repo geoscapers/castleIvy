@@ -13,18 +13,106 @@ class ActionCam {
   
   float rotateCameraDistance = 100f;
 
+  private int prevCameraMode = -1;
+
+  private PVector prevCameraPos = new PVector(); 
+  private PVector cameraVel = new PVector(); 
+
+  private PVector hoverPos = new PVector(-20, -40, 30); 
+  private PVector towerPos = new PVector(1, -40, 3); 
+  private PVector distantPos = new PVector(200, -140, 100); 
+
   ActionCam(Tweaker tweaker) {
     this.tweaker = tweaker;
   }
 
-  void update() {
-    mouseRotateLook();
+  void update() {    
+    float cameraDistance = tweaker.value("cameraDistance", 10);
+    float rotationAngle = tweaker.value("cameraRotation", 0);
+    float pitchAngle = tweaker.value("cameraPitch", 0);
+    float chaseAcceleration = tweaker.value("cameraChaseAcceleration", 0.01);
+    float sideX = tweaker.value("cameraSideX", 0);
     
+    int cameraMode = (int)tweaker.value("cameraMode", 0);
+    if (cameraMode <= 0) {
+      // Dev camera
+      mouseRotateLook();
+    }
+    else if (cameraMode == 1) {
+      // Circle castle camera
+      focus.set(0, 0, 0);
+      rotoCamera(cameraDistance, rotationAngle, pitchAngle);
+    }
+    else if (cameraMode == 2) {
+      // Circle other point
+      focus.set(sideX, -1, 0);
+      rotoCamera(cameraDistance, rotationAngle, pitchAngle);
+    }
+    else if (cameraMode == 3) {
+      activateChaseCam(ivy1.branchPos, ivy1.branchPos, cameraMode, cameraDistance, chaseAcceleration);
+    }
+    else if (cameraMode == 4) {
+      activateChaseCam(ivy3.branchPos, ivy3.branchPos, cameraMode, cameraDistance, chaseAcceleration);
+    }
+    else if (cameraMode == 5) {
+      activateChaseCam(ivy5.branchPos, ivy5.branchPos, cameraMode, cameraDistance, chaseAcceleration);
+    }
+    else if (cameraMode == 6) {
+      if (prevCameraMode != cameraMode) {
+        position.set(distantPos);
+        cameraVel.set(-10,-10, 2);
+      }
+      
+      focus.set(towerPos);
+      chaseCamera(hoverPos, chaseAcceleration);
+    }
+   
+    prevCameraMode = cameraMode;
+    prevCameraPos.set(position);
+  }
+
+  void activateChaseCam(PVector target, PVector foc, int mode, float dist, float acc) {
+    if (prevCameraMode != mode) {
+      position.set(target).add(0, dist, 0);
+      cameraVel.set(0,0,0);
+    }
+    
+    // Chase ivy x
+    focus.set(foc);
+    chaseCamera(target, acc);
+  }
+  
+  private PVector tempAcc = new PVector();
+  void chaseCamera(PVector target, float chaseAcceleration) {
+    
+    /*
+    // Accelerate towards target
+    float dt = (float)tweaker.getTime().getCurrentStepElapsedSeconds();
+    tempAcc.set(target).sub(position).normalize().mult(chaseAcceleration * dt);
+    
+    // Update velocity
+    addScaled(cameraVel, tempAcc, dt);
+
+    // Update pos
+    addScaled(position, cameraVel, dt);
+    */
+    
+    // Simpler, non exploding
+    position.lerp(target, chaseAcceleration);
+
+    updateCamera();
+  }
+  
+  void rotoCamera(float dist, float rotationAngle, float pitchAngle) {
+    position.set(dist * cos(TAU*rotationAngle/360)  * sin(TAU*pitchAngle/360),
+                 dist * cos(TAU*pitchAngle/360) - dist / 2f,
+                 dist * -sin(TAU*rotationAngle/360)  * sin(TAU*pitchAngle/360) );
+
+    updateCamera();
   }
   
   
   void mouseRotateLook() {
-
     focus.set(0, 0, 0);
     
     float rotationAngle = map(mouseX, 0, width, 0, TAU);

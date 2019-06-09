@@ -165,6 +165,7 @@ void drawTree(PVector direction, PVector startpos, PVector endpos, float bottomw
    float angle = 0;
    float angleIncrement = TWO_PI / sides;
    beginShape(QUAD_STRIP);
+   fill(29, 50, 55);
    for (int i = 0; i < sides + 1; ++i) {
      
      // Normal is straight out
@@ -178,18 +179,18 @@ void drawTree(PVector direction, PVector startpos, PVector endpos, float bottomw
      if (i % 2 == 0) {
        addScaled(tempR1,u,cos(angle)*bottomwidth2);
        addScaled(tempR1,v,sin(angle)*bottomwidth2);
-       vertex(tempR1);
+       vertex(tempR1.x, tempR1.y, tempR1.z);
      } else {
        addScaled(tempR1,u,cos(angle)*bottomwidth);
        addScaled(tempR1,v,sin(angle)*bottomwidth);
-       vertex(tempR1);
+       vertex(tempR1.x, tempR1.y, tempR1.z);
      }
      
      // Top pos
      tempR2.set(endpos);
      addScaled(tempR2,u,cos(angle)*topwidth);
      addScaled(tempR2,v,sin(angle)*topwidth);
-     vertex(tempR2);
+     vertex(tempR2.x, tempR2.y, tempR2.z);
      
      angle += angleIncrement;
    }
