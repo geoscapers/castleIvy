@@ -12,8 +12,6 @@ class Terrain {
   float kumpareMuuttuja;
   boolean showGrass;
   
-  PShape terrainShape;
-  
   Terrain(float cellSize, float kumparePIkerroin, float kumparePIsiirto, float kumpareKorkeus, float kumpareMuuttuja, boolean showGrass) {
     
     this.size = 30;
@@ -26,8 +24,6 @@ class Terrain {
     this.kumpareKorkeus = kumpareKorkeus;
     this.kumpareMuuttuja = kumpareMuuttuja;
     this.showGrass = showGrass;
-    
-    this.terrainShape = createShape();
     
     for(int x = 0; x < size; x++) {
      for (int z = 0; z < size; z++) {
@@ -59,13 +55,16 @@ class Terrain {
     endShape();
 
     for(int x = 0; x < size - 1; x++) {
+      
      for (int z = 0; z < size - 1; z++) {
+       
        if (showGrass == true) {
          float dX = x - size / 2;
          float dZ = z - size / 2;
          float centerDistance = sqrt(dX * dX + dZ * dZ);
-         float grassAmount = max(0, map(centerDistance, 0, size / 2.8, 20, 0));
+         float grassAmount = max(0, map(centerDistance, 0, size / 3, 20, 0));
          drawItems(x, z, (int) grassAmount, cellSize * 0.2);
+         
        } else {
          drawItems(x, z, 2, cellSize * 0.8); 
        }    
@@ -93,16 +92,16 @@ class Terrain {
     
   }
   
-  void drawItems(int cellX, int cellZ, int grassAmount, float shuffle) {
+  void drawItems(int cellX, int cellZ, int itemAmount, float shuffle) {
     
     strokeWeight(2);
 
-    for (int x = 0; x < grassAmount; x++) {
+    for (int x = 0; x < itemAmount; x++) {
       
-      for (int z = 0; z < grassAmount; z++) {
+      for (int z = 0; z < itemAmount; z++) {
         
-        float dX = x * 1f / grassAmount * cellSize;
-        float dZ = z * 1f / grassAmount * cellSize;
+        float dX = x * 1f / itemAmount * cellSize;
+        float dZ = z * 1f / itemAmount * cellSize;
         
         float gX = cellX * cellSize + dX;
         float gZ = cellZ * cellSize + dZ;
@@ -118,9 +117,9 @@ class Terrain {
         float y3 = heights[cellX][cellZ + 1];
         float y4 = heights[cellX + 1][cellZ + 1];
         
-        float yA = map(x, 0, grassAmount, y1, y2);
-        float yB = map(x, 0, grassAmount, y3, y4);
-        float yC = map(z, 0, grassAmount, yA, yB);
+        float yA = map(x, 0, itemAmount, y1, y2);
+        float yB = map(x, 0, itemAmount, y3, y4);
+        float yC = map(z, 0, itemAmount, yA, yB);
         
         float windSpeed = 0.25;
         float windAmount = cellSize * 0.2;
@@ -130,9 +129,9 @@ class Terrain {
         if (showGrass == true) {
           beginShape(LINES);
           
-          stroke(28, 50, 30);
+          stroke(29, 50, 30);
           vertex(gX, yC, gZ);
-          stroke(28, 50, 50);
+          stroke(29, 50, 50);
           vertex(gX + wX, yC - 2, gZ + wZ);
           
           endShape();
@@ -177,7 +176,6 @@ class Terrain {
   void drawTriangle(float xA, float yA, float zA, float xB, float yB, float zB, float xC, float yC, float zC, 
                     int cellXA, int cellZA, int cellXB, int cellZB, int cellXC, int cellZC) {
     noStroke();
-    
     tempV1.set(xB - xA, yB - yA, zB - zA);
     tempV2.set(xC - xA, yC - yA, zC - zA);
      

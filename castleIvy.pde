@@ -541,7 +541,7 @@ void setup() {
 
   castle = new VoxelCastle(0.9f, -10, -15, 0, 653);
 
-
+  setupStars();
 
   tweaker.openEditor();
 
@@ -563,7 +563,8 @@ void draw() {
 
 
   // Clear to black
-  background(50);
+  background(50, 20, 70);
+  
   drawSky();
 
 
