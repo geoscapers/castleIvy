@@ -539,8 +539,6 @@ void setup() {
 //  size(1600, 900, P3D);
 
 
-  castle = new VoxelCastle(2f, 42);
-
   castle = new VoxelCastle(0.8f, -10, -15, 0, 653);
 
 
