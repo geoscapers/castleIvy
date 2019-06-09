@@ -106,6 +106,17 @@ class Ivy{
   
   
   
+  Ivy(PVector startpos, PVector upDirection, int maxBranchLength){
+    this.upDirection.set(upDirection);
+    root = new PlantSegment(startpos, this);
+    previousSecondsFromStart = secondsFromStart();
+    secondFromPreviousUpdate = secondsSince(previousSecondsFromStart);
+    PVector prevMean = startpos;
+    ivyseed = random(0, 255);
+    this.maxBranchLength = maxBranchLength;
+   
+  } 
+  
   Ivy(PVector startpos, PVector upDirection){
     this.upDirection.set(upDirection);
     root = new PlantSegment(startpos, this);
