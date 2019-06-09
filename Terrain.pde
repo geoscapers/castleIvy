@@ -12,6 +12,8 @@ class Terrain {
   float kumpareMuuttuja;
   boolean showGrass;
   
+  PShape terrainShape;
+  
   Terrain(float cellSize, float kumparePIkerroin, float kumparePIsiirto, float kumpareKorkeus, float kumpareMuuttuja, boolean showGrass) {
     
     this.size = 30;
@@ -24,6 +26,8 @@ class Terrain {
     this.kumpareKorkeus = kumpareKorkeus;
     this.kumpareMuuttuja = kumpareMuuttuja;
     this.showGrass = showGrass;
+    
+    this.terrainShape = createShape();
     
     for(int x = 0; x < size; x++) {
      for (int z = 0; z < size; z++) {
