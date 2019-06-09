@@ -473,7 +473,7 @@ Terrain castleHill;
 Terrain bgHill1;
 Terrain bgHill2;
 Ivy ivy1;
-//Ivy ivy2;
+Ivy ivy2;
 Ivy ivy3;
 Ivy ivy4;
 Ivy ivy5;
@@ -520,7 +520,8 @@ void setup() {
 
 
   ivy1 =  new Ivy(new PVector(0, 3, 0), new PVector(0, -1, 0));
-  // ivy2 =  new Ivy(new PVector(20,15,10), new PVector(0,-1, 0));
+  //this is a short ivy, default maxBranchLength is 900
+  ivy2 =  new Ivy(new PVector(20,15,10), new PVector(0,-1, 0), 400);
   ivy3 =  new Ivy(new PVector(-30, 15, 0), new PVector(0, -1, 0));
   ivy4 =  new Ivy(new PVector(-10, 15, -30), new PVector(0, -1, 0));
   ivy5 =  new Ivy(new PVector(10, 15, 33), new PVector(0, -1, 0));
@@ -530,7 +531,7 @@ void setup() {
 
   castle = new VoxelCastle(0.9f, -10, -15, 0, 653);
 
-
+  setupStars();
 
   tweaker.openEditor();
   
@@ -574,6 +575,7 @@ void draw() {
   tweaker.update();
 
 
+<<<<<<< HEAD
   // Daylights
   float hue = tweaker.value("hue", 0f) % 100f; 
   float sat = tweaker.value("sat", 0f); 
@@ -581,6 +583,11 @@ void draw() {
 
   // Clear to sky
   background(0);
+=======
+  // Clear to black
+  background(50, 20, 70);
+  
+>>>>>>> 871d83c6e036aff55477b6015afd4defc1524b05
   drawSky();
 
 
@@ -616,7 +623,7 @@ void draw() {
 
   pushMatrix();
   ivy1.drawIvy();
-  // ivy2.drawIvy();
+  ivy2.drawIvy();
   ivy3.drawIvy();
   ivy4.drawIvy();
   ivy5.drawIvy();
