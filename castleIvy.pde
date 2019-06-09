@@ -1,3 +1,10 @@
+import ddf.minim.*;
+import ddf.minim.analysis.*;
+import ddf.minim.effects.*;
+import ddf.minim.signals.*;
+import ddf.minim.spi.*;
+import ddf.minim.ugens.*;
+
 import kotlin.collections.*;
 import kotlin.jvm.internal.*;
 import kotlin.coroutines.*;
@@ -465,19 +472,49 @@ Tweaker tweaker;
 Terrain castleHill;
 Terrain bgHill1;
 Terrain bgHill2;
-Ivy ivy;
+Ivy ivy1;
+//Ivy ivy2;
+Ivy ivy3;
+Ivy ivy4;
+Ivy ivy5;
 VoxelCastle castle;
 ActionCam camera;
 
 Variable fade;
 
+String MUSIC_FILE = "Majestic Hills.mp3";
+
+String credits = 
+  "Forest Ivy Castle\n" +
+  "\n" +
+  "by GeoScapers\n" +
+  "for Graffathon 2019\n" +
+  "\n" +
+  "  Ivy by:         shiera\n" +
+  "  Castle by:      fractalpixel\n" +
+  "  Background by:  sierrafox\n" +
+  "\n" +
+  "Music: \"Majestic Hills\"\n" + 
+  "  by: Kevin MacLeod:\n" +
+  "  cc-by\n";
+
+float DEMO_LENGTH_SECONDS = 199;
+float BEATS_PER_MINUTE = 68;
+
+Minim minim;
+AudioPlayer audioPlayer;
+
 void setup() {
    randomSeed(42);
    noiseSeed(5);
 
-  tweaker = new Tweaker(dataPath("tweakerSettings.json"));
+  tweaker = new Tweaker(dataPath("tweakerSettings.json"), DEMO_LENGTH_SECONDS, BEATS_PER_MINUTE / 60.0f);
   fade = tweaker.variable("fade", 1.0);
 
+  minim = new Minim(this);
+  audioPlayer = minim.loadFile(MUSIC_FILE); // Load music from data directory  
+  
+  
   camera = new ActionCam(tweaker);
   
   // Setup hue saturation brightness based colors
@@ -493,7 +530,11 @@ void setup() {
   bgHill2 = new Terrain(25, 0.0008, 0.0005, -150, 9, false);
 
   
-  ivy =  new Ivy(new PVector(0,-3,0), new PVector(0,-1, 0));
+  ivy1 =  new Ivy(new PVector(0,3,0), new PVector(0,-1, 0));
+ // ivy2 =  new Ivy(new PVector(20,15,10), new PVector(0,-1, 0));
+  ivy3 =  new Ivy(new PVector(-30,15,0), new PVector(0,-1, 0));
+  ivy4 =  new Ivy(new PVector(-10,15,-30), new PVector(0,-1, 0));
+  ivy5 =  new Ivy(new PVector(10,15,33), new PVector(0,-1, 0));
   
 //  size(1600, 900, P3D);
 
@@ -502,11 +543,14 @@ void setup() {
 
 
 
-  //tweaker.openEditor();
+  tweaker.openEditor();
   
   // No lines between polygons
   noStroke();
   fill(80);
+  
+  // Start playing music
+  audioPlayer.play();
 }
 
 
@@ -537,8 +581,8 @@ void draw() {
   
   pushMatrix();
   translate(0, 90, 0);
-  //bgHill1.draw();
-  //bgHill2.draw();
+  bgHill1.draw();
+  bgHill2.draw();
   popMatrix();
 
   // Calibration sphere
@@ -554,11 +598,21 @@ void draw() {
 
 
   pushMatrix();
-  ivy.drawIvy();
+  ivy1.drawIvy();
+ // ivy2.drawIvy();
+  ivy3.drawIvy();
+  ivy4.drawIvy();
+  ivy5.drawIvy();
   popMatrix();
 
 
-  //castle.draw();
+  castle.draw();
+  
+  // Check for end
+  if (tweaker.getTime().getCurrentStepElapsedSeconds() > DEMO_LENGTH_SECONDS) {
+    // Time to quit
+    exit();
+  }
 
 
 }

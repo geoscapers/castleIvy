@@ -2,8 +2,8 @@
   "format_type": "Tweaker",
   "format_version": "1.0",
   "format_meta_info": "Data file for the Tweaker application, used for defining time-variable variables.  See https://github.com/fractalpixel/demotweaker for details.",
-  "stepsPerSecond": 1.0,
-  "durationSeconds": 180.0,
+  "stepsPerSecond": 1.1333333,
+  "durationSeconds": 199.0,
   "vars": [{
     "name": "fade",
     "defaultValue": 1.0,
