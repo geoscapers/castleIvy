@@ -473,7 +473,7 @@ Terrain castleHill;
 Terrain bgHill1;
 Terrain bgHill2;
 Ivy ivy1;
-//Ivy ivy2;
+Ivy ivy2;
 Ivy ivy3;
 Ivy ivy4;
 Ivy ivy5;
@@ -531,7 +531,8 @@ void setup() {
 
 
   ivy1 =  new Ivy(new PVector(0, 3, 0), new PVector(0, -1, 0));
-  // ivy2 =  new Ivy(new PVector(20,15,10), new PVector(0,-1, 0));
+  //this is a short ivy, default maxBranchLength is 900
+  ivy2 =  new Ivy(new PVector(20,15,10), new PVector(0,-1, 0), 400);
   ivy3 =  new Ivy(new PVector(-30, 15, 0), new PVector(0, -1, 0));
   ivy4 =  new Ivy(new PVector(-10, 15, -30), new PVector(0, -1, 0));
   ivy5 =  new Ivy(new PVector(10, 15, 33), new PVector(0, -1, 0));
@@ -600,7 +601,7 @@ void draw() {
 
   pushMatrix();
   ivy1.drawIvy();
-  // ivy2.drawIvy();
+  ivy2.drawIvy();
   ivy3.drawIvy();
   ivy4.drawIvy();
   ivy5.drawIvy();
