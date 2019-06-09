@@ -12,6 +12,8 @@ class Terrain {
   float kumpareMuuttuja;
   boolean showGrass;
   
+  PShape terrainShape;
+  
   Terrain(float cellSize, float kumparePIkerroin, float kumparePIsiirto, float kumpareKorkeus, float kumpareMuuttuja, boolean showGrass) {
     
     this.size = 30;
@@ -24,6 +26,8 @@ class Terrain {
     this.kumpareKorkeus = kumpareKorkeus;
     this.kumpareMuuttuja = kumpareMuuttuja;
     this.showGrass = showGrass;
+    
+    this.terrainShape = createShape();
     
     for(int x = 0; x < size; x++) {
      for (int z = 0; z < size; z++) {
@@ -57,7 +61,11 @@ class Terrain {
     for(int x = 0; x < size - 1; x++) {
      for (int z = 0; z < size - 1; z++) {
        if (showGrass == true) {
-         drawItems(x, z, 5, cellSize * 0.2);
+         float dX = x - size / 2;
+         float dZ = z - size / 2;
+         float centerDistance = sqrt(dX * dX + dZ * dZ);
+         float grassAmount = max(0, map(centerDistance, 0, size / 2.8, 20, 0));
+         drawItems(x, z, (int) grassAmount, cellSize * 0.2);
        } else {
          drawItems(x, z, 2, cellSize * 0.8); 
        }    
