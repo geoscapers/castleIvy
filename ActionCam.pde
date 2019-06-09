@@ -73,7 +73,7 @@ class ActionCam {
 
   void activateChaseCam(PVector target, PVector foc, int mode, float dist, float acc) {
     if (prevCameraMode != mode) {
-      position.set(target).add(0, dist, 0);
+      position.set(target).add(0.4, -dist*0.8, 1);
       cameraVel.set(0,0,0);
     }
     

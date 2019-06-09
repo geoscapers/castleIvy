@@ -13,7 +13,7 @@
       "value": 0.0
     }, {
       "step": 225,
-      "value": 1.0
+      "value": 0.0
     }, {
       "step": 4,
       "value": 1.0
@@ -41,6 +41,93 @@
     }, {
       "step": 26,
       "value": 1.0
+    }, {
+      "step": 49,
+      "value": 1.0
+    }, {
+      "step": 50,
+      "value": 0.0
+    }, {
+      "step": 51,
+      "value": 0.0
+    }, {
+      "step": 52,
+      "value": 1.0
+    }, {
+      "step": 69,
+      "value": 1.0
+    }, {
+      "step": 70,
+      "value": 0.0
+    }, {
+      "step": 71,
+      "value": 0.0
+    }, {
+      "step": 72,
+      "value": 1.0
+    }, {
+      "step": 78,
+      "value": 1.0
+    }, {
+      "step": 79,
+      "value": 0.0
+    }, {
+      "step": 80,
+      "value": 0.0
+    }, {
+      "step": 81,
+      "value": 1.0
+    }, {
+      "step": 85,
+      "value": 1.0
+    }, {
+      "step": 86,
+      "value": 0.0
+    }, {
+      "step": 87,
+      "value": 0.0
+    }, {
+      "step": 88,
+      "value": 1.0
+    }, {
+      "step": 124,
+      "value": 1.0
+    }, {
+      "step": 125,
+      "value": 0.0
+    }, {
+      "step": 126,
+      "value": 0.0
+    }, {
+      "step": 127,
+      "value": 1.0
+    }, {
+      "step": 149,
+      "value": 0.0
+    }, {
+      "step": 150,
+      "value": 0.0
+    }, {
+      "step": 151,
+      "value": 1.0
+    }, {
+      "step": 148,
+      "value": 1.0
+    }, {
+      "step": 136,
+      "value": 1.0
+    }, {
+      "step": 137,
+      "value": 0.0
+    }, {
+      "step": 138,
+      "value": 0.0
+    }, {
+      "step": 139,
+      "value": 1.0
+    }, {
+      "step": 213,
+      "value": 1.0
     }]
   }, {
     "name": "cameraDistance",
@@ -54,10 +141,7 @@
       "value": 100.0
     }, {
       "step": 160,
-      "value": 11.0
-    }, {
-      "step": 30,
-      "value": 200.0
+      "value": 100.0
     }, {
       "step": 8,
       "value": 200.0
@@ -67,6 +151,51 @@
     }, {
       "step": 24,
       "value": 160.0
+    }, {
+      "step": 51,
+      "value": 1.0
+    }, {
+      "step": 166,
+      "value": 50.0
+    }, {
+      "step": 25,
+      "value": 80.0
+    }, {
+      "step": 42,
+      "value": 40.0
+    }, {
+      "step": 50,
+      "value": 60.0
+    }, {
+      "step": 150,
+      "value": 130.0
+    }, {
+      "step": 175,
+      "value": 100.0
+    }, {
+      "step": 86,
+      "value": 22.0
+    }, {
+      "step": 87,
+      "value": 11.0
+    }, {
+      "step": 125,
+      "value": 33.0
+    }, {
+      "step": 126,
+      "value": 10.0
+    }, {
+      "step": 137,
+      "value": 10.0
+    }, {
+      "step": 138,
+      "value": 4.0
+    }, {
+      "step": 149,
+      "value": 33.0
+    }, {
+      "step": 94,
+      "value": 55.0
     }]
   }, {
     "name": "cameraRotation",
@@ -77,10 +206,7 @@
       "value": 100.0
     }, {
       "step": 225,
-      "value": 0.0
-    }, {
-      "step": 30,
-      "value": 100.0
+      "value": 1200.0
     }, {
       "step": 8,
       "value": 90.0
@@ -90,6 +216,30 @@
     }, {
       "step": 24,
       "value": 0.0
+    }, {
+      "step": 51,
+      "value": 0.0
+    }, {
+      "step": 166,
+      "value": 0.0
+    }, {
+      "step": 175,
+      "value": 60.0
+    }, {
+      "step": 25,
+      "value": 50.0
+    }, {
+      "step": 42,
+      "value": 500.0
+    }, {
+      "step": 50,
+      "value": 600.0
+    }, {
+      "step": 150,
+      "value": 550.0
+    }, {
+      "step": 184,
+      "value": 200.0
     }]
   }, {
     "name": "cameraPitch",
@@ -97,12 +247,9 @@
     "interpolator": "CosineInterpolator",
     "steps": [{
       "step": 225,
-      "value": 0.0
-    }, {
-      "step": 0,
       "value": 66.0
     }, {
-      "step": 30,
+      "step": 0,
       "value": 66.0
     }, {
       "step": 8,
@@ -113,6 +260,33 @@
     }, {
       "step": 24,
       "value": 70.0
+    }, {
+      "step": 51,
+      "value": 0.0
+    }, {
+      "step": 166,
+      "value": 90.0
+    }, {
+      "step": 184,
+      "value": 50.0
+    }, {
+      "step": 42,
+      "value": 100.0
+    }, {
+      "step": 50,
+      "value": 179.0
+    }, {
+      "step": 94,
+      "value": 120.0
+    }, {
+      "step": 150,
+      "value": 60.0
+    }, {
+      "step": 175,
+      "value": 88.0
+    }, {
+      "step": 125,
+      "value": 133.0
     }]
   }, {
     "name": "cameraChaseAcceleration",
@@ -124,6 +298,9 @@
     }, {
       "step": 225,
       "value": 9.999999747378752E-5
+    }, {
+      "step": 51,
+      "value": 0.009999999776482582
     }]
   }, {
     "name": "cameraMode",
@@ -133,65 +310,65 @@
       "step": 0,
       "value": 2.0
     }, {
-      "step": 33,
-      "value": 1.0
-    }, {
-      "step": 34,
-      "value": 3.0
-    }, {
-      "step": 39,
-      "value": 3.0
-    }, {
-      "step": 40,
-      "value": 6.0
-    }, {
-      "step": 51,
-      "value": 6.0
-    }, {
-      "step": 52,
-      "value": 4.0
-    }, {
-      "step": 60,
-      "value": 4.0
-    }, {
-      "step": 61,
-      "value": 5.0
-    }, {
-      "step": 67,
-      "value": 5.0
-    }, {
-      "step": 68,
-      "value": 3.0
-    }, {
-      "step": 74,
-      "value": 3.0
-    }, {
-      "step": 75,
-      "value": 1.0
-    }, {
       "step": 93,
       "value": 1.0
     }, {
       "step": 94,
-      "value": 6.0
-    }, {
-      "step": 100,
-      "value": 6.0
-    }, {
-      "step": 101,
       "value": 1.0
     }, {
       "step": 225,
       "value": 1.0
-    }, {
-      "step": 30,
-      "value": 2.0
     }, {
       "step": 8,
       "value": 2.0
     }, {
       "step": 9,
       "value": 2.0
+    }, {
+      "step": 51,
+      "value": 3.0
+    }, {
+      "step": 70,
+      "value": 3.0
+    }, {
+      "step": 71,
+      "value": 4.0
+    }, {
+      "step": 79,
+      "value": 4.0
+    }, {
+      "step": 80,
+      "value": 5.0
+    }, {
+      "step": 86,
+      "value": 5.0
+    }, {
+      "step": 87,
+      "value": 1.0
+    }, {
+      "step": 166,
+      "value": 1.0
+    }, {
+      "step": 50,
+      "value": 2.0
+    }, {
+      "step": 150,
+      "value": 1.0
+    }, {
+      "step": 126,
+      "value": 4.0
+    }, {
+      "step": 125,
+      "value": 1.0
+    }, {
+      "step": 137,
+      "value": 4.0
+    }, {
+      "step": 138,
+      "value": 5.0
+    }, {
+      "step": 149,
+      "value": 5.0
     }]
   }, {
     "name": "atumness",
@@ -199,13 +376,25 @@
     "interpolator": "CosineInterpolator",
     "steps": [{
       "step": 225,
-      "value": 1.0
-    }, {
-      "step": 111,
-      "value": 1.0
+      "value": 2.0
     }, {
       "step": 0,
       "value": 0.0
+    }, {
+      "step": 51,
+      "value": 0.0
+    }, {
+      "step": 93,
+      "value": 0.0
+    }, {
+      "step": 94,
+      "value": 0.0
+    }, {
+      "step": 155,
+      "value": 1.0
+    }, {
+      "step": 149,
+      "value": 5.0
     }]
   }, {
     "name": "cameraSideX",
@@ -218,9 +407,6 @@
       "step": 0,
       "value": -511.0
     }, {
-      "step": 30,
-      "value": -300.0
-    }, {
       "step": 8,
       "value": -241.0
     }, {
@@ -229,17 +415,147 @@
     }, {
       "step": 24,
       "value": 0.0
+    }, {
+      "step": 51,
+      "value": 0.0
     }]
   }, {
     "name": "creditsPos",
     "defaultValue": -1.0,
     "interpolator": "CosineInterpolator",
     "steps": [{
-      "step": 172,
+      "step": 225,
+      "value": 4.0
+    }, {
+      "step": 0,
       "value": -1.0
     }, {
-      "step": 225,
+      "step": 161,
+      "value": -1.0
+    }, {
+      "step": 181,
       "value": 3.0
+    }]
+  }, {
+    "name": "hue",
+    "defaultValue": 0.0,
+    "interpolator": "CosineInterpolator",
+    "steps": [{
+      "step": 0,
+      "value": 50.0
+    }, {
+      "step": 225,
+      "value": 66.0
+    }, {
+      "step": 125,
+      "value": 70.0
+    }, {
+      "step": 175,
+      "value": 66.0
+    }, {
+      "step": 181,
+      "value": 99.0
+    }]
+  }, {
+    "name": "sat",
+    "defaultValue": 0.0,
+    "interpolator": "CosineInterpolator",
+    "steps": [{
+      "step": 0,
+      "value": 20.0
+    }, {
+      "step": 225,
+      "value": 88.0
+    }, {
+      "step": 125,
+      "value": 20.0
+    }, {
+      "step": 175,
+      "value": 20.0
+    }, {
+      "step": 181,
+      "value": 60.0
+    }, {
+      "step": 212,
+      "value": 44.0
+    }]
+  }, {
+    "name": "lum",
+    "defaultValue": 0.0,
+    "interpolator": "CosineInterpolator",
+    "steps": [{
+      "step": 0,
+      "value": 70.0
+    }, {
+      "step": 225,
+      "value": 55.0
+    }, {
+      "step": 125,
+      "value": 65.0
+    }, {
+      "step": 175,
+      "value": 0.0
+    }, {
+      "step": 181,
+      "value": 40.0
+    }]
+  }, {
+    "name": "stars",
+    "defaultValue": 1.0,
+    "interpolator": "CosineInterpolator",
+    "steps": [{
+      "step": 0,
+      "value": 0.0
+    }, {
+      "step": 225,
+      "value": 33.0
+    }, {
+      "step": 125,
+      "value": 0.0
+    }, {
+      "step": 174,
+      "value": 1.0
+    }, {
+      "step": 181,
+      "value": 2.0
+    }, {
+      "step": 182,
+      "value": 1.0
+    }, {
+      "step": 183,
+      "value": 2.0
+    }, {
+      "step": 184,
+      "value": 1.0
+    }, {
+      "step": 178,
+      "value": 1.0
+    }, {
+      "step": 186,
+      "value": 2.0
+    }, {
+      "step": 190,
+      "value": 1.0
+    }, {
+      "step": 210,
+      "value": 1.0
+    }]
+  }, {
+    "name": "sun",
+    "defaultValue": 0.0,
+    "interpolator": "CosineInterpolator",
+    "steps": [{
+      "step": 0,
+      "value": 1.0
+    }, {
+      "step": 225,
+      "value": 0.0
+    }, {
+      "step": 125,
+      "value": 1.0
+    }, {
+      "step": 172,
+      "value": -1.0
     }]
   }]
 }

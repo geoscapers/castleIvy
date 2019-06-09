@@ -46,6 +46,21 @@ class Terrain {
     terrainBuilt = false;
   }
   
+  color summerGround = color(25, 30, 26);
+  color autumnGround = color(19, 40, 55);
+
+  color grassBaseColor = color(19, 40, 55);
+  color grassMidColor = color(19, 40, 55);
+  color grassTopColor = color(19, 40, 55);
+
+  color grassBaseSummerColor = color(30, 30, 25);
+  color grassMidSummerColor = color(30, 40, 35);
+  color grassTopSummerColor = color(24, 25, 45);
+  
+  color grassBaseAutumnColor = color(25, 20, 35);
+  color grassMidAutumnColor = color(20, 24, 45);
+  color grassTopAutumnColor = color(15, 20, 55);
+  
   void draw() {
     if (!terrainBuilt) {
       // This builds the ground and forest into terrainShape
@@ -56,9 +71,18 @@ class Terrain {
     // Draw the ground and forest (they don't move)
     shape(terrainShape);
     
+    
     // Draw grass, it moves from frame to frame in the wind
     pushMatrix();
-    fill(29, 50, 65);
+    
+    float autumness = tweaker.value("atumness");
+    color groundColor = lerpColor(summerGround, autumnGround, autumness);
+    
+    grassBaseColor = lerpColor(grassBaseSummerColor, grassBaseAutumnColor, autumness);
+    grassMidColor  = lerpColor(grassMidSummerColor, grassMidAutumnColor, autumness);
+    grassTopColor  = lerpColor(grassTopSummerColor, grassTopAutumnColor, autumness);
+    
+    fill(groundColor);
     translate(-cellSize * size / 2, 58, -cellSize * size / 2);
     beginShape(LINES);
     if (showGrass) {
@@ -93,11 +117,10 @@ class Terrain {
     
     terrainShape.translate(-cellSize * size / 2, 58, -cellSize * size / 2);
     
-    
     // Ground
     terrainShape.beginShape(TRIANGLES);
     terrainShape.noStroke();
-    terrainShape.fill(29, 50, 45);
+    terrainShape.fill(summerGround);
     for(int x = 0; x < size - 1; x++) {
      for (int z = 0; z < size - 1; z++) {
          drawCell(terrainShape, x, z);
@@ -165,14 +188,14 @@ class Terrain {
           // Draw moving gras
           beginShape(LINES);
           
-          stroke(28, 50, 30);
+          stroke(grassBaseColor);
           vertex(gX, yC, gZ);
-          stroke(28, 50, 50);
+          stroke(grassMidColor);
           vertex(gX + wX, yC - 2, gZ + wZ);
 
           // Tip
           vertex(gX + wX, yC - 2, gZ + wZ); // Same as the end point of the base section above
-          stroke(20, 40, 65);
+          stroke(grassTopColor);
           float tipWindIncrease = 2.0f; // Increase wind to bow it more at the tip
           vertex(gX + wX * tipWindIncrease, yC - 3, gZ + wZ * tipWindIncrease); 
           

@@ -43,9 +43,9 @@ class Ivy{
   //maximum width of the plant at the root
   float maxBranchWidth = 0.5;
   //growthspeed of the branch
-  float branchGrowth = 0.008;
+  float branchGrowth = 0.01;
   //growthspead of the leaf
-  float leafGrowthSpeed = branchGrowth*20;
+  float leafGrowthSpeed = growthSpeed*20;
   //a random number where you can set seed
   XoroShiro rnd = new XoroShiro();
   //pvector used to count the mean position of the branch tips
@@ -73,13 +73,13 @@ class Ivy{
   
   
   //color of you g sprouts and young leafs
-  color sproutColor = color(35, 72, 78);
+  color sproutColor = color(26, 36, 68);
   //middlecolor of the branch, 
   color branchColor = color(33, 53, 50);
   //color of the root of the branch, and old branches
-  color rootColor = color(5, 30, 30);
+  color rootColor = color(5, 26, 30);
   //basecolor of the leafs, the leaf is randomisating this a bit
-  color leafColor = color(35, 60, 50);
+  color leafColor = color(35, 25, 40);
   //basecolor of the leafs for the autum
   color leafColorAutum = color(10, 80, 70);
   

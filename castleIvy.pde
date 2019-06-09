@@ -477,6 +477,8 @@ Ivy ivy2;
 Ivy ivy3;
 Ivy ivy4;
 Ivy ivy5;
+Ivy ivy6;
+Ivy ivy7;
 VoxelCastle castle;
 ActionCam camera;
 
@@ -521,10 +523,12 @@ void setup() {
 
   ivy1 =  new Ivy(new PVector(0, 3, 0), new PVector(0, -1, 0));
   //this is a short ivy, default maxBranchLength is 900
-  ivy2 =  new Ivy(new PVector(20,15,10), new PVector(0,-1, 0), 400);
-  ivy3 =  new Ivy(new PVector(-30, 15, 0), new PVector(0, -1, 0));
-  ivy4 =  new Ivy(new PVector(-10, 15, -30), new PVector(0, -1, 0));
-  ivy5 =  new Ivy(new PVector(10, 15, 33), new PVector(0, -1, 0));
+  ivy2 =  new Ivy(new PVector(30, 14,-44), new PVector(0,-1, 0), 400);
+  ivy3 =  new Ivy(new PVector(-44, 14, 0), new PVector(0, -1, 0));
+  ivy4 =  new Ivy(new PVector(-10, 14, -44), new PVector(0, -1, 0));
+  ivy5 =  new Ivy(new PVector(10, 14, 45), new PVector(0, -1, 0));
+  ivy6 =  new Ivy(new PVector(40, 14, 36), new PVector(0, -1, 0));
+  ivy7 =  new Ivy(new PVector(-40, 14, -45), new PVector(0, -1, 0));
 
   //  size(1600, 900, P3D);
 
@@ -564,6 +568,7 @@ void setup() {
 
 
 void draw() {
+
   hint(ENABLE_DEPTH_TEST); 
 
   pushMatrix();
@@ -573,31 +578,28 @@ void draw() {
   scale(height/100.0);
 
   tweaker.update();
-
-
-<<<<<<< HEAD
-  // Daylights
-  float hue = tweaker.value("hue", 0f) % 100f; 
-  float sat = tweaker.value("sat", 0f); 
-  float lum = tweaker.value("lum", 0f); 
-
-  // Clear to sky
-  background(0);
-=======
-  // Clear to black
-  background(50, 20, 70);
   
->>>>>>> 871d83c6e036aff55477b6015afd4defc1524b05
-  drawSky();
 
 
   camera.update();
 
+  // Daylights
+  float hue = tweaker.value("hue", 0f) % 100f; 
+  float sat = tweaker.value("sat", 0f); 
+  float lum = tweaker.value("lum", 0f);
+  
+  background(hue, sat, lum);
+//  background(50, 20, 70);
+
+  drawSky();
+  
   // Setup lights
+  float sun = tweaker.value("sun", 0f);
   directionalLight(80, 30, 30, 0.2, 0.2, 0.1);
-  directionalLight(13, 20, 80, -0.5, 0.8, 0.1);
+  directionalLight(13, 20, 100, sin(sun*TAU), cos(sun*TAU), 0.2);
   //  directionalLight(20, 20, 100, 0.2, -0.3, -0.3);
   ambientLight(70, 20, 40);
+
 
   pushMatrix();
   castleHill.draw();
@@ -627,6 +629,8 @@ void draw() {
   ivy3.drawIvy();
   ivy4.drawIvy();
   ivy5.drawIvy();
+  ivy6.drawIvy();
+  ivy7.drawIvy();
   popMatrix();
 
   //if (secondsFromStart() > 60) castle.draw();
