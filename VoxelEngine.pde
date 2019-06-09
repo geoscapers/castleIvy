@@ -20,6 +20,10 @@ class Voxels {
   
   PVector position = new PVector();
   
+  private boolean redrawNeeded = true;
+  
+  private PShape shape;
+  
   private PVector tempCenter = new PVector();
   
   private int byteToUnsignedMask = 0xFF;
@@ -27,6 +31,7 @@ class Voxels {
   private XoroShiro random = new XoroShiro(1234);
   
   Voxels(float voxelSize, int countX, int countY, int countZ) {
+    
     this.voxelSize = voxelSize;
     this.countX = countX;
     this.countY = countY;
@@ -59,6 +64,10 @@ class Voxels {
     else {
       return 0;
     }
+  }
+  
+  boolean isSolid(int x, int y, int z) {
+    return get(x, y, z) != 0;
   }
 
   void clearVolume(int x1, int y1, int z1, 
@@ -129,11 +138,79 @@ class Voxels {
     }
     
   }
-  
-  void draw() {
-    pushMatrix();
-    beginShape(TRIANGLES);
+
+
+  void toWorldPos(int x, int y, int z, PVector out) {
+    out.x = (x + 0.5f) * voxelSize + position.x;
+    out.y = (y + 0.5f) * voxelSize + position.y;
+    out.z = (z + 0.5f) * voxelSize + position.z;
+  }
+
+  private void setVectorToBlock(int x, int y, int z, PVector pos, PVector deltaOut) {
+    toWorldPos(x, y, z, deltaOut);
+    deltaOut.sub(pos);
+  }
+
+
+  private PVector tempDelta = new PVector();
+  boolean getClosestBlock(PVector pos, PVector vectorToClosestWall) {
+    int voxelX = (int) ((pos.x - position.x) / voxelSize);
+    int voxelY = (int) ((pos.y - position.y) / voxelSize);
+    int voxelZ = (int) ((pos.z - position.z) / voxelSize);
     
+    // Check if we found it.
+    if (isSolid(voxelX, voxelY, voxelZ)) {
+      setVectorToBlock(voxelX, voxelY, voxelZ, pos, vectorToClosestWall);
+      return true;
+    }
+    
+    int searchRadius = 8; // Look this many blocks in all directions for a solid block
+    for (int i = 1; i < searchRadius; i++) {
+      
+      // This recalculates the insides multiple times, but it's 3 am and we got 9 hours left.
+      // Should only add a constant factor of about 2 or so anyway.
+      float closestDistSquared = -1;
+      boolean foundClosestDist = false;
+      for (int x = voxelX - i; x <= voxelX + 1; x++) 
+        for (int y = voxelY - i; y <= voxelY + 1; y++) 
+          for (int z = voxelZ - i; z <= voxelZ + 1; z++) {
+            if (isSolid(x, y, z)) {
+              // Hit wall, get dist
+              setVectorToBlock(x, y, z, pos, tempDelta);
+              float distSquared = tempDelta.magSq();
+              if (!foundClosestDist || distSquared < closestDistSquared) {
+                foundClosestDist = true;
+                closestDistSquared = distSquared;
+                vectorToClosestWall.set(tempDelta);
+              }
+            }
+          }
+          
+      if (foundClosestDist) return true;  // We found a solid block, and wrote direction vector to it.  
+    }
+
+    // No matches within search radius, give up.
+    return false;
+  }
+  
+
+
+  void redraw() {
+    redrawNeeded = true;
+  }
+
+  void draw() {
+    if (redrawNeeded) {
+      buildShape();
+      redrawNeeded = false;
+    }
+    
+    shape(shape);
+  }
+  
+  private void buildShape() {
+    shape = createShape();
+    shape.beginShape(TRIANGLES);
     float xPos = 0f;
     float yPos = 0f;
     float zPos = 0f;
@@ -147,7 +224,6 @@ class Voxels {
           
           int voxelType = voxels[x][y][z] & byteToUnsignedMask;
           
-          
           if (voxelType != 0) {                          
             tempCenter.set(xPos + voxelSize * 0.5f + position.x, 
                            -(yPos + voxelSize * 0.5f + position.y), 
@@ -157,9 +233,7 @@ class Voxels {
         }
       }
     }
-    
-    endShape();
-    popMatrix();
+    shape.endShape();
   }
   
   private PVector tC = new PVector(); 
@@ -168,8 +242,8 @@ class Voxels {
   private PVector unitX = new PVector(1, 0, 0); 
   private PVector unitY = new PVector(0, 1, 0); 
   private PVector unitZ = new PVector(0, 0, 1); 
-  void drawBlock(PVector center, color c) {
-    fill(c);
+  private void drawBlock(PVector center, color c) {
+    shape.fill(c);
     
     addScaled(tC.set(center), unitX, voxelSize*0.5f);
     drawFace(tC, unitY, unitZ, false);
@@ -195,7 +269,7 @@ class Voxels {
   private PVector tempB  = new PVector();
   private PVector tempC  = new PVector();
   private PVector tempD  = new PVector();
-  void drawFace(PVector center, PVector u, PVector v, boolean flip) {
+  private void drawFace(PVector center, PVector u, PVector v, boolean flip) {
     
     tempA.set(center);
     tempB.set(center);
@@ -215,10 +289,10 @@ class Voxels {
     addScaled(tempD, v,  voxelSize * 0.5f);
 
     if (flip) {
-      makeRectangle(tempA, tempB, tempC, tempD);
+      makeShapeRectangle(shape, tempA, tempB, tempC, tempD);
     }
     else {
-      makeRectangle(tempD, tempC, tempB, tempA);
+      makeShapeRectangle(shape, tempD, tempC, tempB, tempA);
     }
   }
   

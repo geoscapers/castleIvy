@@ -170,3 +170,25 @@ void makeTriangle(PVector a, PVector b, PVector c) {
   vertex(b.x, b.y, b.z);
   vertex(c.x, c.y, c.z);
 }
+
+
+
+void makeShapeRectangle(PShape shape, PVector a, PVector b, PVector c, PVector d) {
+  makeShapeTriangle(shape, a, b, d);  
+  makeShapeTriangle(shape, b, c, d);  
+}
+
+void makeShapeTriangle(PShape shape, PVector a, PVector b, PVector c) {
+  
+  // Calculate normal for triangle
+  mtTempAB.set(b).sub(a);
+  mtTempAC.set(c).sub(a);
+  mtTempAB.cross(mtTempAC, mtTempNormal);
+  mtTempNormal.normalize();
+  
+  // Triangle corners and their normals
+  shape.normal(mtTempNormal.x, mtTempNormal.y, mtTempNormal.z);
+  shape.vertex(a.x, a.y, a.z);
+  shape.vertex(b.x, b.y, b.z);
+  shape.vertex(c.x, c.y, c.z);
+}

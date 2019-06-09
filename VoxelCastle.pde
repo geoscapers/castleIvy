@@ -10,14 +10,16 @@ class VoxelCastle {
   int volumeY = 70;
   int volumeZ = 100;
   
-  VoxelCastle(float voxelSize, long seed) {
+  VoxelCastle(float voxelSize, float posX, float posY, float posZ, long seed) {
     voxels = new Voxels(voxelSize, volumeX, volumeY, volumeZ);
-    voxels.position.y -= 10; // Move more underground
+    voxels.position.x += posX;
+    voxels.position.y += posY;
+    voxels.position.z += posZ;
     this.seed = seed;
     random.setSeed(seed);
     
-    generateRubble(60, 50, 4, 400, seed + 1);
-    generateRubble(65, 55, 6, 700, seed + 3);
+    //generateRubble(60, 50, 4, 400, seed + 1);
+    //generateRubble(65, 55, 6, 700, seed + 3);
     //generateTower(50, 0, 50, 8, 4, 8, 3, 2, 0.5f, 42);
     
     generateCastle(42);
@@ -37,7 +39,7 @@ class VoxelCastle {
     // Lets have some rubble
     int rubblePiles = random.nextInt(5, 20);
     for (int i = 0; i < rubblePiles; i++) {
-      generateRubble(random.nextInt(10, volumeX - 10), random.nextInt(10, volumeX - 10), random.nextInt(4, 10), random.nextInt(10, 300), seed + i + 11);     
+      generateRubble(random.nextInt(30, volumeX - 30), random.nextInt(30, volumeX - 30), random.nextInt(4, 10), random.nextInt(10, 300), seed + i + 11);     
     }
     
     int baseY = 20;
@@ -57,7 +59,7 @@ class VoxelCastle {
         (int) random.nextGaussianFloat(volumeZ/2, baseSize*0.2),
         (int) random.nextGaussianFloat(baseSize, baseSize*0.2),
         (int) random.nextGaussianFloat(baseSize, baseSize*0.2),
-        random.nextInt(2 + i*2, 3 + i * 4),
+        random.nextInt(i*2, 3 + i * 4),
         random.nextInt(4, 6),
         random.nextInt(4, 10),
         minLevels,
@@ -199,5 +201,13 @@ class VoxelCastle {
     
     return posBased;
   }
+
+
+
+  // Returns false if no castle wall nearby.
+  boolean getCastleDistance(PVector position, PVector vectorToClosestWall) {
+    return voxels.getClosestBlock(position, vectorToClosestWall);
+  }
+  
 
 }
