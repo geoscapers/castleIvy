@@ -539,7 +539,7 @@ void setup() {
 //  size(1600, 900, P3D);
 
 
-  castle = new VoxelCastle(0.8f, -10, -15, 0, 653);
+  castle = new VoxelCastle(0.9f, -10, -15, 0, 653);
 
 
 
@@ -606,9 +606,8 @@ void draw() {
   ivy5.drawIvy();
   popMatrix();
 
-
+  //if (secondsFromStart() > 60) castle.draw();
   castle.draw();
-  
   // Check for end
   if (tweaker.getTime().getCurrentStepElapsedSeconds() > DEMO_LENGTH_SECONDS) {
     // Time to quit

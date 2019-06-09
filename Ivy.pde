@@ -5,18 +5,18 @@ class Ivy{
   //segments currently in the ivy
   int segmentAmount = 0; 
   //maximum length of one segment
-  float maxSegmentLenght = 0.1;
+  float maxSegmentLenght = 0.2;
   //length at wich the segmens cehecks if it branches
-  float segmentBranchLenght = 0.9*maxSegmentLenght;
+  float segmentBranchLenght = 0.8*maxSegmentLenght;
   //langth at wich a segment checks if it grows a child
   float segmentChildbirtLengt = 0.5*maxSegmentLenght;
   //the speed that the segments grow
-  float growthSpeed = 0.005; 
+  float growthSpeed = 0.02; 
   //the porbability that a new branch is formed, this is the base probability, it will drop in every branch, 
   //and if it does not happen there is a lower chanse a shorter branch will form
-  float branchProbability = 0.042;
+  float branchProbability = 0.052;
   //this is the multiplier on how the branchProbability changes for every branch
-  float branchProbabilityMultiplier = 0.4;
+  float branchProbabilityMultiplier = 0.5;
   
   //Temporary PVector used for the plantCenter dissipator
   PVector tempForDissat = new PVector();
@@ -33,19 +33,19 @@ class Ivy{
   //a fudge parameter affecting on how big an angle a branch has
   float branchWildness = 1.2;
   //a fudge parameter affecting how scuiggly the plant is
-  float turnstrength = 0.5;
+  float turnstrength = 0.6;
   //running count on amount of branches 
   int branchamount = 1;
   //maximum segment amount in a branch (depth from root)
-  int maxBranchLength = 800;
+  int maxBranchLength = 900;
   //maximum amount of branches
   float maxBranchAmount = 30;
   //maximum width of the plant at the root
   float maxBranchWidth = 0.5;
   //growthspeed of the branch
-  float branchGrowth = 0.01;
+  float branchGrowth = 0.008;
   //growthspead of the leaf
-  float leafGrowthSpeed = branchGrowth*15;
+  float leafGrowthSpeed = branchGrowth*20;
   //a random number where you can set seed
   XoroShiro rnd = new XoroShiro();
   //pvector used to count the mean position of the branch tips
@@ -55,7 +55,7 @@ class Ivy{
   //seed to this ivy, initialised with random, used to get diffent plants
   float ivyseed = 0;
   //probability that there will be a leaf in a segment (if there is a branch there is no leaf, and if it is the end there is always a leaf)
-  float leafprob = 0.4;
+  float leafprob = 0.5;
   //the thicknessloss in the beginning
   float startticknessLoss = 0.96;
   //parameter to multipy the thickness with for every next segment, bigger will make it thicker fr longer
@@ -65,7 +65,7 @@ class Ivy{
   //this is the segmentamount where the thicknessfuncton will be the new one
   int segmentToChangeLoss = 800;
   //the rate on wich fresh color changes 
-  float freshColorChangeRate = 0.15;
+  float freshColorChangeRate = 0.2;
   //the rate on wich the branch get broun
   float colorChangeRate = 0.03;
   //the rate on wich the leafs turn dark
@@ -90,11 +90,19 @@ class Ivy{
   PVector p1 = new PVector();
   PVector p2 = new PVector();
   PVector p3 = new PVector();
+  //for castleAttractor
+  PVector ca = new PVector();
   
+  
+  //autum parameters
   float atumness = 0;
   boolean leafGoBoom = false;
   float timeOfBoom = 0;
   float boomspeed = 3;
+  
+  //something for the camera
+  PVector branchPos = new PVector();
+  boolean branchPosFound = false;
   
   
   
@@ -123,7 +131,7 @@ class Ivy{
 
   
   private void updateIvy(){
-    
+    branchPosFound = false;
     
     //println(segmentAmount);
     if (segmentAmount < segmentToChangeLoss) thicknesLoss = map(segmentAmount, 0, segmentToChangeLoss, startticknessLoss, laterThicknessLoss);

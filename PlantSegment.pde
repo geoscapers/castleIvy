@@ -96,6 +96,20 @@ class PlantSegment{
    //away from middle
    plant.tempForDissat.set(plant.prevMean).sub(startpos).normalize().mult(-0.05);
    direction.add(plant.tempForDissat);
+   boolean foundWall = castle.getCastleDistance(endpos, plant.ca);
+   if (foundWall){
+     float distance = plant.ca.mag();
+     plant.ca.normalize();
+     if (distance < 0.95){
+       direction.add(plant.ca.mult(-0.5));
+     }  
+     if (distance > 0.95){
+       direction.add(plant.ca.mult(0.5));
+     }  
+     
+   }  
+   
+   
    
    direction.normalize();
    
@@ -194,7 +208,7 @@ class PlantSegment{
          PVector d = direction.copy();
          
          d.add(random(-plant.branchWildness, plant.branchWildness), random(-plant.branchWildness, plant.branchWildness), random(-plant.branchWildness, plant.branchWildness));
-         branchSegment = new PlantSegment(this, plant, d.normalize(), 0.85);
+         branchSegment = new PlantSegment(this, plant, d.normalize(), 0.75);
          plant.addBranchAmount();
          
        }  
@@ -224,6 +238,10 @@ class PlantSegment{
    //add ends to mean
    if (branchSegment == null && nextSegment == null){
        plant.addToMean(endpos);
+   } 
+   if (!plant.branchPosFound && branchSegment == null && nextSegment == null && !branchEnding){
+     plant.branchPosFound = true;
+     plant.branchPos = endpos;
    }  
    
    
